@@ -57,7 +57,7 @@ public class Color4b extends Tuple4b implements java.io.Serializable {
      * @param b4 the alpha value
      */
     public Color4b(byte b1, byte b2, byte b3, byte b4) {
-	super(b1,b2,b3,b4);
+    super(b1,b2,b3,b4);
     }
 
 
@@ -66,7 +66,7 @@ public class Color4b extends Tuple4b implements java.io.Serializable {
      * @param c the array of length 4 containing r, g, b, and alpha in order
      */
     public Color4b(byte[] c) {
-	super(c);
+    super(c);
     }
 
 
@@ -86,7 +86,7 @@ public class Color4b extends Tuple4b implements java.io.Serializable {
      * data
      */
     public Color4b(Tuple4b t1) {
-	super(t1);
+    super(t1);
     }
 
 
@@ -102,10 +102,10 @@ public class Color4b extends Tuple4b implements java.io.Serializable {
      * @since vecmath 1.2
      */
     public Color4b(Color color) {
-	super((byte)color.getRed(),
-	      (byte)color.getGreen(),
-	      (byte)color.getBlue(),
-	      (byte)color.getAlpha());
+    super((byte)color.getRed(),
+          (byte)color.getGreen(),
+          (byte)color.getBlue(),
+          (byte)color.getAlpha());
     }
 
 
@@ -128,10 +128,10 @@ public class Color4b extends Tuple4b implements java.io.Serializable {
      * @since vecmath 1.2
      */
     public final void set(Color color) {
-	x = (byte)color.getRed();
-	y = (byte)color.getGreen();
-	z = (byte)color.getBlue();
-	w = (byte)color.getAlpha();
+    x = (byte)color.getRed();
+    y = (byte)color.getGreen();
+    z = (byte)color.getBlue();
+    w = (byte)color.getAlpha();
     }
 
 
@@ -144,12 +144,12 @@ public class Color4b extends Tuple4b implements java.io.Serializable {
      * @since vecmath 1.2
      */
     public final Color get() {
-	int r = (int)x & 0xff;
-	int g = (int)y & 0xff;
-	int b = (int)z & 0xff;
-	int a = (int)w & 0xff;
+    int r = (int)x & 0xff;
+    int g = (int)y & 0xff;
+    int b = (int)z & 0xff;
+    int a = (int)w & 0xff;
 
-	return new Color(r, g, b, a);
+    return new Color(r, g, b, a);
     }
 
 }

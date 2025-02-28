@@ -67,10 +67,10 @@ public abstract class Tuple4i implements java.io.Serializable, Cloneable {
      * @param w the w coordinate
      */
     public Tuple4i(int x, int y, int z, int w) {
-	this.x = x;
-	this.y = y;
-	this.z = z;
-	this.w = w;
+    this.x = x;
+    this.y = y;
+    this.z = z;
+    this.w = w;
     }
 
 
@@ -79,10 +79,10 @@ public abstract class Tuple4i implements java.io.Serializable, Cloneable {
      * @param t the array of length 4 containing x, y, z, and w in order.
      */
     public Tuple4i(int[] t) {
-	this.x = t[0];
-	this.y = t[1];
-	this.z = t[2];
-	this.w = t[3];
+    this.x = t[0];
+    this.y = t[1];
+    this.z = t[2];
+    this.w = t[3];
     }
 
 
@@ -92,10 +92,10 @@ public abstract class Tuple4i implements java.io.Serializable, Cloneable {
      * and w data.
      */
     public Tuple4i(Tuple4i t1) {
-	this.x = t1.x;
-	this.y = t1.y;
-	this.z = t1.z;
-	this.w = t1.w;
+    this.x = t1.x;
+    this.y = t1.y;
+    this.z = t1.z;
+    this.w = t1.w;
     }
 
 
@@ -103,10 +103,10 @@ public abstract class Tuple4i implements java.io.Serializable, Cloneable {
      * Constructs and initializes a Tuple4i to (0,0,0,0).
      */
     public Tuple4i() {
-	this.x = 0;
-	this.y = 0;
-	this.z = 0;
-	this.w = 0;
+    this.x = 0;
+    this.y = 0;
+    this.z = 0;
+    this.w = 0;
     }
 
 
@@ -119,10 +119,10 @@ public abstract class Tuple4i implements java.io.Serializable, Cloneable {
      * @param w the w coordinate
      */
     public final void set(int x, int y, int z, int w) {
-	this.x = x;
-	this.y = y;
-	this.z = z;
-	this.w = w;
+    this.x = x;
+    this.y = y;
+    this.z = z;
+    this.w = w;
     }
 
 
@@ -132,10 +132,10 @@ public abstract class Tuple4i implements java.io.Serializable, Cloneable {
      * @param t the array of length 4 containing x, y, z, and w in order.
      */
     public final void set(int[] t) {
-	this.x = t[0];
-	this.y = t[1];
-	this.z = t[2];
-	this.w = t[3];
+    this.x = t[0];
+    this.y = t[1];
+    this.z = t[2];
+    this.w = t[3];
     }
 
 
@@ -144,10 +144,10 @@ public abstract class Tuple4i implements java.io.Serializable, Cloneable {
      * @param t1 the tuple to be copied
      */
     public final void set(Tuple4i t1) {
-	this.x = t1.x;
-	this.y = t1.y;
-	this.z = t1.z;
-	this.w = t1.w;
+    this.x = t1.x;
+    this.y = t1.y;
+    this.z = t1.z;
+    this.w = t1.w;
     }
 
 
@@ -156,10 +156,10 @@ public abstract class Tuple4i implements java.io.Serializable, Cloneable {
      * @param t the array
      */
     public final void get(int[] t) {
-	t[0] = this.x;
-	t[1] = this.y;
-	t[2] = this.z;
-	t[3] = this.w;
+    t[0] = this.x;
+    t[1] = this.y;
+    t[2] = this.z;
+    t[3] = this.w;
     }
 
 
@@ -168,10 +168,10 @@ public abstract class Tuple4i implements java.io.Serializable, Cloneable {
      * @param t the target tuple
      */
     public final void get(Tuple4i t) {
-	t.x = this.x;
-	t.y = this.y;
-	t.z = this.z;
-	t.w = this.w;
+    t.x = this.x;
+    t.y = this.y;
+    t.z = this.z;
+    t.w = this.w;
     }
 
 
@@ -181,10 +181,10 @@ public abstract class Tuple4i implements java.io.Serializable, Cloneable {
      * @param t2 the second tuple
      */
     public final void add(Tuple4i t1, Tuple4i t2) {
-	this.x = t1.x + t2.x;
-	this.y = t1.y + t2.y;
-	this.z = t1.z + t2.z;
-	this.w = t1.w + t2.w;
+    this.x = t1.x + t2.x;
+    this.y = t1.y + t2.y;
+    this.z = t1.z + t2.z;
+    this.w = t1.w + t2.w;
     }
 
 
@@ -193,10 +193,10 @@ public abstract class Tuple4i implements java.io.Serializable, Cloneable {
      * @param t1 the other tuple
      */
     public final void add(Tuple4i t1) {
-	this.x += t1.x;
-	this.y += t1.y;
-	this.z += t1.z;
-	this.w += t1.w;
+    this.x += t1.x;
+    this.y += t1.y;
+    this.z += t1.z;
+    this.w += t1.w;
     }
 
 
@@ -207,10 +207,10 @@ public abstract class Tuple4i implements java.io.Serializable, Cloneable {
      * @param t2 the second tuple
      */
     public final void sub(Tuple4i t1, Tuple4i t2) {
-	this.x = t1.x - t2.x;
-	this.y = t1.y - t2.y;
-	this.z = t1.z - t2.z;
-	this.w = t1.w - t2.w;
+    this.x = t1.x - t2.x;
+    this.y = t1.y - t2.y;
+    this.z = t1.z - t2.z;
+    this.w = t1.w - t2.w;
     }
 
 
@@ -220,10 +220,10 @@ public abstract class Tuple4i implements java.io.Serializable, Cloneable {
      * @param t1 the other tuple
      */
     public final void sub(Tuple4i t1) {
-	this.x -= t1.x;
-	this.y -= t1.y;
-	this.z -= t1.z;
-	this.w -= t1.w;
+    this.x -= t1.x;
+    this.y -= t1.y;
+    this.z -= t1.z;
+    this.w -= t1.w;
     }
 
 
@@ -232,10 +232,10 @@ public abstract class Tuple4i implements java.io.Serializable, Cloneable {
      * @param t1 the source tuple
      */
     public final void negate(Tuple4i t1) {
-	this.x = -t1.x;
-	this.y = -t1.y;
-	this.z = -t1.z;
-	this.w = -t1.w;
+    this.x = -t1.x;
+    this.y = -t1.y;
+    this.z = -t1.z;
+    this.w = -t1.w;
     }
 
 
@@ -243,10 +243,10 @@ public abstract class Tuple4i implements java.io.Serializable, Cloneable {
      * Negates the value of this tuple in place.
      */
     public final void negate() {
-	this.x = -this.x;
-	this.y = -this.y;
-	this.z = -this.z;
-	this.w = -this.w;
+    this.x = -this.x;
+    this.y = -this.y;
+    this.z = -this.z;
+    this.w = -this.w;
     }
 
 
@@ -257,10 +257,10 @@ public abstract class Tuple4i implements java.io.Serializable, Cloneable {
      * @param t1 the source tuple
      */
     public final void scale(int s, Tuple4i t1) {
-	this.x = s*t1.x;
-	this.y = s*t1.y;
-	this.z = s*t1.z;
-	this.w = s*t1.w;
+    this.x = s*t1.x;
+    this.y = s*t1.y;
+    this.z = s*t1.z;
+    this.w = s*t1.w;
     }
 
 
@@ -270,10 +270,10 @@ public abstract class Tuple4i implements java.io.Serializable, Cloneable {
      * @param s the scalar value
      */
     public final void scale(int s) {
-	this.x *= s;
-	this.y *= s;
-	this.z *= s;
-	this.w *= s;
+    this.x *= s;
+    this.y *= s;
+    this.z *= s;
+    this.w *= s;
     }
 
 
@@ -285,10 +285,10 @@ public abstract class Tuple4i implements java.io.Serializable, Cloneable {
      * @param t2 the tuple to be added
      */
     public final void scaleAdd(int s, Tuple4i t1, Tuple4i t2) {
-	this.x = s*t1.x + t2.x;
-	this.y = s*t1.y + t2.y;
-	this.z = s*t1.z + t2.z;
-	this.w = s*t1.w + t2.w;
+    this.x = s*t1.x + t2.x;
+    this.y = s*t1.y + t2.y;
+    this.z = s*t1.z + t2.z;
+    this.w = s*t1.w + t2.w;
     }
 
 
@@ -327,16 +327,16 @@ public abstract class Tuple4i implements java.io.Serializable, Cloneable {
     @Override
     public boolean equals(Object t1) {
         try {
-	    Tuple4i t2 = (Tuple4i) t1;
-	    return(this.x == t2.x && this.y == t2.y &&
-		   this.z == t2.z && this.w == t2.w);
+        Tuple4i t2 = (Tuple4i) t1;
+        return(this.x == t2.x && this.y == t2.y &&
+           this.z == t2.z && this.w == t2.w);
         }
         catch (NullPointerException e2) {
-	    return false;
-	}
+        return false;
+    }
         catch (ClassCastException e1) {
-	    return false;
-	}
+        return false;
+    }
     }
 
 
@@ -350,12 +350,12 @@ public abstract class Tuple4i implements java.io.Serializable, Cloneable {
      */
     @Override
     public int hashCode() {
-	long bits = 1L;
-	bits = 31L * bits + (long)x;
-	bits = 31L * bits + (long)y;
-	bits = 31L * bits + (long)z;
-	bits = 31L * bits + (long)w;
-	return (int) (bits ^ (bits >> 32));
+    long bits = 1L;
+    bits = 31L * bits + (long)x;
+    bits = 31L * bits + (long)y;
+    bits = 31L * bits + (long)z;
+    bits = 31L * bits + (long)w;
+    return (int) (bits ^ (bits >> 32));
     }
 
 
@@ -368,35 +368,35 @@ public abstract class Tuple4i implements java.io.Serializable, Cloneable {
      */
     public final void clamp(int min, int max, Tuple4i t) {
         if( t.x > max ) {
-	    x = max;
+        x = max;
         } else if( t.x < min ) {
-	    x = min;
+        x = min;
         } else {
-	    x = t.x;
+        x = t.x;
         }
 
         if( t.y > max ) {
-	    y = max;
+        y = max;
         } else if( t.y < min ) {
-	    y = min;
+        y = min;
         } else {
-	    y = t.y;
+        y = t.y;
         }
 
         if( t.z > max ) {
-	    z = max;
+        z = max;
         } else if( t.z < min ) {
-	    z = min;
+        z = min;
         } else {
-	    z = t.z;
+        z = t.z;
         }
 
         if( t.w > max ) {
-	    w = max;
+        w = max;
         } else if( t.w < min ) {
-	    w = min;
+        w = min;
         } else {
-	    w = t.w;
+        w = t.w;
         }
     }
 
@@ -409,27 +409,27 @@ public abstract class Tuple4i implements java.io.Serializable, Cloneable {
      */
     public final void clampMin(int min, Tuple4i t) {
         if( t.x < min ) {
-	    x = min;
+        x = min;
         } else {
-	    x = t.x;
+        x = t.x;
         }
 
         if( t.y < min ) {
-	    y = min;
+        y = min;
         } else {
-	    y = t.y;
+        y = t.y;
         }
 
         if( t.z < min ) {
-	    z = min;
+        z = min;
         } else {
-	    z = t.z;
+        z = t.z;
         }
 
         if( t.w < min ) {
-	    w = min;
+        w = min;
         } else {
-	    w = t.w;
+        w = t.w;
         }
 
 
@@ -444,27 +444,27 @@ public abstract class Tuple4i implements java.io.Serializable, Cloneable {
      */
     public final void clampMax(int max, Tuple4i t) {
         if( t.x > max ) {
-	    x = max;
+        x = max;
         } else {
-	    x = t.x;
+        x = t.x;
         }
 
         if( t.y > max ) {
-	    y = max;
+        y = max;
         } else {
-	    y = t.y;
+        y = t.y;
         }
 
         if( t.z > max ) {
-	    z = max;
+        z = max;
         } else {
-	    z = t.z;
+        z = t.z;
         }
 
         if( t.w > max ) {
-	    w = max;
+        w = max;
         } else {
-	    w = t.z;
+        w = t.z;
         }
     }
 
@@ -475,10 +475,10 @@ public abstract class Tuple4i implements java.io.Serializable, Cloneable {
      *  @param t   the source tuple, which will not be modified
      */
     public final void absolute(Tuple4i t) {
-	x = Math.abs(t.x);
-	y = Math.abs(t.y);
-	z = Math.abs(t.z);
-	w = Math.abs(t.w);
+    x = Math.abs(t.x);
+    y = Math.abs(t.y);
+    z = Math.abs(t.z);
+    w = Math.abs(t.w);
     }
 
 
@@ -488,28 +488,28 @@ public abstract class Tuple4i implements java.io.Serializable, Cloneable {
      *  @param max  the highest value in this tuple after clamping
      */
     public final void clamp(int min, int max) {
-	if( x > max ) {
-	    x = max;
+    if( x > max ) {
+        x = max;
         } else if( x < min ) {
-	    x = min;
+        x = min;
         }
 
         if( y > max ) {
-	    y = max;
+        y = max;
         } else if( y < min ) {
-	    y = min;
+        y = min;
         }
 
         if( z > max ) {
-	    z = max;
+        z = max;
         } else if( z < min ) {
-	    z = min;
+        z = min;
         }
 
         if( w > max ) {
-	    w = max;
+        w = max;
         } else if( w < min ) {
-	    w = min;
+        w = min;
         }
     }
 
@@ -519,17 +519,17 @@ public abstract class Tuple4i implements java.io.Serializable, Cloneable {
      *  @param min   the lowest value in this tuple after clamping
      */
     public final void clampMin(int min) {
-	if (x < min)
-	    x=min;
+    if (x < min)
+        x=min;
 
-	if (y < min)
-	    y = min;
+    if (y < min)
+        y = min;
 
-	if (z < min)
-	    z = min;
+    if (z < min)
+        z = min;
 
-	if (w < min)
-	    w = min;
+    if (w < min)
+        w = min;
     }
 
 
@@ -538,17 +538,17 @@ public abstract class Tuple4i implements java.io.Serializable, Cloneable {
      *  @param max   the highest value in the tuple after clamping
      */
     public final void clampMax(int max) {
-	if (x > max)
-	    x = max;
+    if (x > max)
+        x = max;
 
-	if (y > max)
-	    y = max;
+    if (y > max)
+        y = max;
 
-	if (z > max)
-	    z = max;
+    if (z > max)
+        z = max;
 
-	if (w > max)
-	    w = max;
+    if (w > max)
+        w = max;
     }
 
 
@@ -556,10 +556,10 @@ public abstract class Tuple4i implements java.io.Serializable, Cloneable {
      *  Sets each component of this tuple to its absolute value.
      */
     public final void absolute() {
-	x = Math.abs(x);
-	y = Math.abs(y);
-	z = Math.abs(z);
-	w = Math.abs(w);
+    x = Math.abs(x);
+    y = Math.abs(y);
+    z = Math.abs(z);
+    w = Math.abs(w);
     }
 
     /**
@@ -572,107 +572,107 @@ public abstract class Tuple4i implements java.io.Serializable, Cloneable {
      */
     @Override
     public Object clone() {
-	// Since there are no arrays we can just use Object.clone()
-	try {
-	    return super.clone();
-	} catch (CloneNotSupportedException e) {
-	    // this shouldn't happen, since we are Cloneable
-	    throw new InternalError();
-	}
+    // Since there are no arrays we can just use Object.clone()
+    try {
+        return super.clone();
+    } catch (CloneNotSupportedException e) {
+        // this shouldn't happen, since we are Cloneable
+        throw new InternalError();
+    }
     }
 
 
 
     /**
-	 * Get the <i>x</i> coordinate.
-	 *
-	 * @return the <i>x</i> coordinate.
-	 *
-	 * @since vecmath 1.5
-	 */
-	public final int getX() {
-		return x;
-	}
+     * Get the <i>x</i> coordinate.
+     *
+     * @return the <i>x</i> coordinate.
+     *
+     * @since vecmath 1.5
+     */
+    public final int getX() {
+        return x;
+    }
 
 
-	/**
-	 * Set the <i>x</i> coordinate.
-	 *
-	 * @param x  value to <i>x</i> coordinate.
-	 *
-	 * @since vecmath 1.5
-	 */
-	public final void setX(int x) {
-		this.x = x;
-	}
+    /**
+     * Set the <i>x</i> coordinate.
+     *
+     * @param x  value to <i>x</i> coordinate.
+     *
+     * @since vecmath 1.5
+     */
+    public final void setX(int x) {
+        this.x = x;
+    }
 
 
-	/**
-	 * Get the <i>y</i> coordinate.
-	 *
-	 * @return  the <i>y</i> coordinate.
-	 *
-	 * @since vecmath 1.5
-	 */
-	public final int getY() {
-		return y;
-	}
+    /**
+     * Get the <i>y</i> coordinate.
+     *
+     * @return  the <i>y</i> coordinate.
+     *
+     * @since vecmath 1.5
+     */
+    public final int getY() {
+        return y;
+    }
 
 
-	/**
-	 * Set the <i>y</i> coordinate.
-	 *
-	 * @param y value to <i>y</i> coordinate.
-	 *
-	 * @since vecmath 1.5
-	 */
-	public final void setY(int y) {
-		this.y = y;
-	}
+    /**
+     * Set the <i>y</i> coordinate.
+     *
+     * @param y value to <i>y</i> coordinate.
+     *
+     * @since vecmath 1.5
+     */
+    public final void setY(int y) {
+        this.y = y;
+    }
 
-	/**
-	 * Get the <i>z</i> coordinate.
-	 *
-	 * @return the <i>z</i> coordinate.
-	 *
-	 * @since vecmath 1.5
-	 */
-	public final int getZ() {
-		return z;
-	}
-
-
-	/**
-	 * Set the <i>z</i> coordinate.
-	 *
-	 * @param z value to <i>z</i> coordinate.
-	 *
-	 * @since vecmath 1.5
-	 */
-	public final void setZ(int z) {
-		this.z = z;
-	}
+    /**
+     * Get the <i>z</i> coordinate.
+     *
+     * @return the <i>z</i> coordinate.
+     *
+     * @since vecmath 1.5
+     */
+    public final int getZ() {
+        return z;
+    }
 
 
-	/**
-	 * Get the <i>w</i> coordinate.
-	 * @return the  <i>w</i> coordinate.
-	 * @since vecmath 1.5
-	 */
-	public final int getW() {
-		return w;
-	}
+    /**
+     * Set the <i>z</i> coordinate.
+     *
+     * @param z value to <i>z</i> coordinate.
+     *
+     * @since vecmath 1.5
+     */
+    public final void setZ(int z) {
+        this.z = z;
+    }
 
 
-	/**
-	 * Set the <i>w</i> coordinate.
-	 *
-	 * @param w value to <i>w</i> coordinate.
-	 *
-	 * @since vecmath 1.5
-	 */
-	public final void setW(int w) {
-		this.w = w;
-	}
+    /**
+     * Get the <i>w</i> coordinate.
+     * @return the  <i>w</i> coordinate.
+     * @since vecmath 1.5
+     */
+    public final int getW() {
+        return w;
+    }
+
+
+    /**
+     * Set the <i>w</i> coordinate.
+     *
+     * @param w value to <i>w</i> coordinate.
+     *
+     * @since vecmath 1.5
+     */
+    public final void setW(int w) {
+        this.w = w;
+    }
 
 }

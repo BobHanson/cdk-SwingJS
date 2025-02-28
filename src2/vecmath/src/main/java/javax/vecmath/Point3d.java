@@ -148,8 +148,8 @@ public class Point3d extends Tuple3d implements java.io.Serializable {
      * @return  the L-1 distance
      */
     public final double distanceL1(Point3d p1) {
-	return Math.abs(this.x-p1.x) + Math.abs(this.y-p1.y) +
-	    Math.abs(this.z-p1.z);
+    return Math.abs(this.x-p1.x) + Math.abs(this.y-p1.y) +
+        Math.abs(this.z-p1.z);
     }
 
 
@@ -161,10 +161,10 @@ public class Point3d extends Tuple3d implements java.io.Serializable {
      * @return  the L-infinite distance
      */
     public final double distanceLinf(Point3d p1) {
-	double tmp;
-	tmp = Math.max( Math.abs(this.x-p1.x), Math.abs(this.y-p1.y));
+    double tmp;
+    tmp = Math.max( Math.abs(this.x-p1.x), Math.abs(this.y-p1.y));
 
-	return Math.max(tmp,Math.abs(this.z-p1.z));
+    return Math.max(tmp,Math.abs(this.z-p1.z));
     }
 
 

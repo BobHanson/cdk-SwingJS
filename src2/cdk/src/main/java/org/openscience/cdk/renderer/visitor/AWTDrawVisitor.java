@@ -41,7 +41,6 @@ import org.openscience.cdk.renderer.generators.BasicSceneGenerator;
 import org.openscience.cdk.renderer.generators.BasicSceneGenerator.ArrowHeadWidth;
 import org.openscience.cdk.renderer.generators.BasicSceneGenerator.Scale;
 import org.openscience.cdk.renderer.generators.BasicSceneGenerator.UseAntiAliasing;
-import org.openscience.cdk.renderer.generators.standard.TextOutline;
 
 import javax.vecmath.Point2d;
 import javax.vecmath.Vector2d;
@@ -57,6 +56,7 @@ import java.awt.geom.AffineTransform;
 import java.awt.geom.Line2D;
 import java.awt.geom.Path2D;
 import java.awt.geom.PathIterator;
+import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.geom.RoundRectangle2D;
 import java.util.HashMap;
@@ -177,21 +177,9 @@ public class AWTDrawVisitor extends AbstractAWTDrawVisitor {
     }
 
     private void visit(LineElement line) {
-        Stroke savedStroke = this.graphics.getStroke();
 
         // scale the stroke by zoom + scale (both included in the AffineTransform)
-        float width = (float) (line.width * transform.getScaleX());
-        if (width < minStroke) width = minStroke;
-
-        int key = (int) (width * 4); // store 2.25, 2.5, 2.75 etc to separate keys
-
-        if (strokeCache && strokeMap.containsKey(key)) {
-            this.graphics.setStroke(strokeMap.get(key));
-        } else {
-            BasicStroke stroke = new BasicStroke(width, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND);
-            this.graphics.setStroke(stroke);
-            strokeMap.put(key, stroke);
-        }
+        Stroke savedStroke = setStroke(line.width * transform.getScaleX(), true);
 
         double[] coordinates = new double[]{line.firstPointX, line.firstPointY, line.secondPointX, line.secondPointY};
 
@@ -207,7 +195,45 @@ public class AWTDrawVisitor extends AbstractAWTDrawVisitor {
         graphics.setStroke(savedStroke);
     }
 
-    private void visit(OvalElement oval) {
+	/**
+	 * 
+	 * Create and set the stroke, optionally storing 2.25, 2.5, 2.75 etc to 
+	 * separate keys in strokeCache.
+	 * 
+	 * Strokes are keyed as Integer.valueOf(int) (4*width)), negated for default style (square, miter)
+	 * 
+	 * Optionally set the stroke to rounded or square.
+	 * 
+	 * 
+	 * @param dwidth calcuated width
+	 * @param rounded true for rounded stroke; false for square
+	 * @return current stroke
+	 * @author Bob Hanson
+	 */
+    private Stroke setStroke(double dwidth, boolean rounded) {
+    	float width = (float) dwidth;
+        if (width < minStroke) 
+        	width = minStroke;
+        Integer key = (strokeCache ? Integer.valueOf((int) (width * 4) * (rounded ? 1 : -1)) : null);
+        Stroke savedStroke = this.graphics.getStroke();
+        BasicStroke stroke = (strokeCache ? strokeMap.get(key) : null);
+        if (stroke == null) {
+        	// TODO: John, please check.
+        	// There was a second bug here in that both straight and 
+        	// rounded were being stored with the same key. 
+        	
+        	// TODO: John, please check.
+        	// ArrowElement uses the default BasicStroke(width), not rounded
+            stroke = (rounded ? new BasicStroke(width, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND) 
+            		: new BasicStroke(width)); // i.e. BasicStroke.CAP_SQUARE, BasicStroke.JOIN_MITER
+            if (strokeCache)
+            	strokeMap.put(key, stroke);
+        }
+        this.graphics.setStroke(stroke);
+        return savedStroke;
+	}
+
+	private void visit(OvalElement oval) {
         this.graphics.setColor(oval.color);
         int radius = scaleX(oval.radius);
         int diameter = scaleX(oval.radius * 2);
@@ -216,24 +242,11 @@ public class AWTDrawVisitor extends AbstractAWTDrawVisitor {
             this.graphics.fillOval(transformX(oval.xCoord) - radius, transformY(oval.yCoord) - radius, diameter,
                     diameter);
         } else {
-            Stroke savedStroke = this.graphics.getStroke();
-
             // scale the stroke by zoom + scale (both included in the AffineTransform)
-            float width = (float) (oval.stroke * transform.getScaleX());
-            if (width < minStroke) width = minStroke;
-
-            int key = (int) (width * 4); // store 2.25, 2.5, 2.75 etc to separate keys
-
-            if (strokeCache && strokeMap.containsKey(key)) {
-                this.graphics.setStroke(strokeMap.get(key));
-            } else {
-                BasicStroke stroke = new BasicStroke(width, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND);
-                this.graphics.setStroke(stroke);
-                strokeMap.put(key, stroke);
-            }
-
+            Stroke savedStroke = setStroke(oval.stroke * transform.getScaleX(), true);
             this.graphics.drawOval(transformX(oval.xCoord) - radius, transformY(oval.yCoord) - radius, diameter,
                     diameter);
+        	// TODO: John, please check -never restored?
         }
     }
 
@@ -308,10 +321,13 @@ public class AWTDrawVisitor extends AbstractAWTDrawVisitor {
         this.graphics.fillPolygon(xCoords, yCoords, 3);
     }
 
+    private static BasicStroke basicStroke1Square = new BasicStroke(1);
+    private static BasicStroke basicStroke1Rounded = new BasicStroke(1, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND);
+
     private void drawDashedWedge(Point2d vertexA, Point2d vertexB, Point2d vertexC) {
         // store the current stroke
         Stroke storedStroke = this.graphics.getStroke();
-        this.graphics.setStroke(new BasicStroke(1));
+        this.graphics.setStroke(basicStroke1Square);
 
         // calculate the distances between lines
         double distance = vertexB.distance(vertexA);
@@ -341,7 +357,7 @@ public class AWTDrawVisitor extends AbstractAWTDrawVisitor {
     private void drawIndiffWedge(Point2d vertexA, Point2d vertexB, Point2d vertexC) {
         // store the current stroke
         Stroke storedStroke = this.graphics.getStroke();
-        this.graphics.setStroke(new BasicStroke(1, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
+        this.graphics.setStroke(basicStroke1Rounded);
 
         // calculate the distances between lines
         double distance = vertexB.distance(vertexA);
@@ -453,39 +469,33 @@ public class AWTDrawVisitor extends AbstractAWTDrawVisitor {
         }
     }
 
-    private static boolean isJS = (/** @j2sNative true || */false);
+    private void visit(GeneralPath path) {
+        this.graphics.setColor(path.color);
+        if (path.textString != null) {
+            drawTextString(path);
+            return;
+        }
+        Path2D cpy = new Path2D.Double();
+        cpy.append(getPathIterator(path, transform), false);
+        if (path.fill) {
+            this.graphics.fill(cpy);
+        } else {
+        	// TODO John, any reason we should NOT use the cache here? 
+            Stroke savedStroke = setStroke(path.stroke * transform.getScaleX(), true);
+            this.graphics.draw(cpy);
+            this.graphics.setStroke(savedStroke);
+        }
+    }
 
-	private void visit(GeneralPath path) {
-		this.graphics.setColor(path.color);
-		Path2D cpy = new Path2D.Double();
-		cpy.append(getPathIterator(path, transform), false);
-		if (isJS && path.textOutline != null) {
-			paintText(cpy, path.textOutline);
-		} else {
-			if (path.fill) {
-				this.graphics.fill(cpy);
-			} else {
-				Stroke stroke = this.graphics.getStroke();
-				this.graphics.setStroke(new BasicStroke((float) (path.stroke * transform.getScaleX()),
-						BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
-				this.graphics.draw(cpy);
-				this.graphics.setStroke(stroke);
-			}
-		}
-	}
+    private void drawTextString(GeneralPath path) {
+        Bounds b = new Bounds(path, transform);
+        path.textString.setScale(transform);
+        Point2D dxy = path.textString.getTextPosition(b.minX, b.minY);
+        graphics.setFont(path.textString.getFont());
+        graphics.drawString(path.textString.getText(), Math.round((float)dxy.getX()), Math.round((float)dxy.getY()));
+    }
 
-    private void paintText(Path2D cpy, TextOutline textOutline) {
-    	float x = cpy.getBounds().x;
-    	float y = cpy.getBounds().y + cpy.getBounds().height;
-    	Font font = textOutline.glyphs.getFont();
-    	float fs = Math.round(font.getSize() * (float) textOutline.transform.getScaleX() * (float) transform.getScaleX() * 10)/10f;
-    	font = font.deriveFont(fs);
-    	this.graphics.setFont(font);
-    	this.graphics.drawString(textOutline.text, (int)x, (int)y);        	
-	
-	}
-
-	private static PathIterator getPathIterator(final GeneralPath path, final AffineTransform transform) {
+    private static PathIterator getPathIterator(final GeneralPath path, final AffineTransform transform) {
         return new PathIterator() {
 
             int index;
@@ -541,16 +551,7 @@ public class AWTDrawVisitor extends AbstractAWTDrawVisitor {
 
     private void visit(ArrowElement line) {
         double scale = rendererModel.getParameter(Scale.class).getValue();
-        Stroke savedStroke = graphics.getStroke();
-
-        int w = (int) (line.width * scale);
-        if (strokeMap.containsKey(w)) {
-            graphics.setStroke(strokeMap.get(w));
-        } else {
-            BasicStroke stroke = new BasicStroke(w);
-            graphics.setStroke(stroke);
-            strokeMap.put(w, stroke);
-        }
+        Stroke savedStroke = setStroke((int) line.width * scale, false);
 
         graphics.setColor(line.color);
         int[] a = this.transformPoint(line.startX, line.startY);

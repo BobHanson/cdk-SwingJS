@@ -47,7 +47,7 @@ public class Point4i extends Tuple4i implements java.io.Serializable {
      * @param w the w coordinate
      */
     public Point4i(int x, int y, int z, int w) {
-	super(x, y, z, w);
+    super(x, y, z, w);
     }
 
 
@@ -56,7 +56,7 @@ public class Point4i extends Tuple4i implements java.io.Serializable {
      * @param t the array of length 4 containing x, y, z, and w in order.
      */
     public Point4i(int[] t) {
-	super(t);
+    super(t);
     }
 
 
@@ -66,7 +66,7 @@ public class Point4i extends Tuple4i implements java.io.Serializable {
      * and w data.
      */
     public Point4i(Tuple4i t1) {
-	super(t1);
+    super(t1);
     }
 
 
@@ -74,7 +74,7 @@ public class Point4i extends Tuple4i implements java.io.Serializable {
      * Constructs and initializes a Point4i to (0,0,0,0).
      */
     public Point4i() {
-	super();
+    super();
     }
 
 }

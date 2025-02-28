@@ -111,7 +111,7 @@ public class Point4f extends Tuple4f implements java.io.Serializable {
      * @since vecmath 1.2
      */
     public Point4f(Tuple3f t1) {
-	super(t1.x, t1.y, t1.z, 1.0f);
+    super(t1.x, t1.y, t1.z, 1.0f);
     }
 
 
@@ -133,10 +133,10 @@ public class Point4f extends Tuple4f implements java.io.Serializable {
      * @since vecmath 1.2
      */
     public final void set(Tuple3f t1) {
-	this.x = t1.x;
-	this.y = t1.y;
-	this.z = t1.z;
-	this.w = 1.0f;
+    this.x = t1.x;
+    this.y = t1.y;
+    this.z = t1.z;
+    this.w = 1.0f;
     }
 
 

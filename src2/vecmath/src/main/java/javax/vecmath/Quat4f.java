@@ -172,7 +172,7 @@ public class Quat4f extends Tuple4f implements java.io.Serializable {
       this.y = q1.w*q2.y + q2.w*q1.y - q1.x*q2.z + q1.z*q2.x;
       this.z = q1.w*q2.z + q2.w*q1.z + q1.x*q2.y - q1.y*q2.x;
     } else {
-      float	x, y, w;
+      float    x, y, w;
 
       w = q1.w*q2.w - q1.x*q2.x - q1.y*q2.y - q1.z*q2.z;
       x = q1.w*q2.x + q2.w*q1.x + q1.y*q2.z - q1.z*q2.y;
@@ -328,47 +328,47 @@ public class Quat4f extends Tuple4f implements java.io.Serializable {
        float ww = 0.25f*(m1.m00 + m1.m11 + m1.m22 + m1.m33);
 
        if (ww >= 0) {
-	   if (ww >= EPS2) {
-	       this.w = (float) Math.sqrt((double)ww);
-	       ww =  0.25f/this.w;
-	       this.x = (m1.m21 - m1.m12)*ww;
-	       this.y = (m1.m02 - m1.m20)*ww;
-	       this.z = (m1.m10 - m1.m01)*ww;
-	       return;
-	   }
+       if (ww >= EPS2) {
+           this.w = (float) Math.sqrt((double)ww);
+           ww =  0.25f/this.w;
+           this.x = (m1.m21 - m1.m12)*ww;
+           this.y = (m1.m02 - m1.m20)*ww;
+           this.z = (m1.m10 - m1.m01)*ww;
+           return;
+       }
        } else {
-	   this.w = 0;
-	   this.x = 0;
-	   this.y = 0;
-	   this.z = 1;
-	   return;
+       this.w = 0;
+       this.x = 0;
+       this.y = 0;
+       this.z = 1;
+       return;
        }
 
        this.w = 0;
        ww = -0.5f*(m1.m11 + m1.m22);
 
        if (ww >= 0) {
-	   if (ww >= EPS2) {
-	       this.x = (float) Math.sqrt((double) ww);
-	       ww = 1.0f/(2.0f*this.x);
-	       this.y = m1.m10*ww;
-	       this.z = m1.m20*ww;
-	       return;
-	   }
+       if (ww >= EPS2) {
+           this.x = (float) Math.sqrt((double) ww);
+           ww = 1.0f/(2.0f*this.x);
+           this.y = m1.m10*ww;
+           this.z = m1.m20*ww;
+           return;
+       }
        } else {
-	   this.x = 0;
-	   this.y = 0;
-	   this.z = 1;
-	   return;
+       this.x = 0;
+       this.y = 0;
+       this.z = 1;
+       return;
        }
 
        this.x = 0;
        ww = 0.5f*(1.0f - m1.m22);
 
        if (ww >= EPS2) {
-	   this.y = (float) Math.sqrt((double) ww);
-	   this.z = m1.m21/(2.0f*this.y);
-	   return;
+       this.y = (float) Math.sqrt((double) ww);
+       this.z = m1.m21/(2.0f*this.y);
+       return;
        }
 
        this.y = 0;
@@ -383,52 +383,52 @@ public class Quat4f extends Tuple4f implements java.io.Serializable {
      */
     public final void set(Matrix4d m1)
     {
-	double ww = 0.25*(m1.m00 + m1.m11 + m1.m22 + m1.m33);
+    double ww = 0.25*(m1.m00 + m1.m11 + m1.m22 + m1.m33);
 
-	if (ww >= 0) {
-	    if (ww >= EPS2) {
-		this.w = (float) Math.sqrt(ww);
-		ww = 0.25/this.w;
-		this.x = (float) ((m1.m21 - m1.m12)*ww);
-		this.y = (float) ((m1.m02 - m1.m20)*ww);
-		this.z = (float) ((m1.m10 - m1.m01)*ww);
-		return;
-	    }
-	} else {
-	    this.w = 0;
-	    this.x = 0;
-	    this.y = 0;
-	    this.z = 1;
-	    return;
-	}
+    if (ww >= 0) {
+        if (ww >= EPS2) {
+        this.w = (float) Math.sqrt(ww);
+        ww = 0.25/this.w;
+        this.x = (float) ((m1.m21 - m1.m12)*ww);
+        this.y = (float) ((m1.m02 - m1.m20)*ww);
+        this.z = (float) ((m1.m10 - m1.m01)*ww);
+        return;
+        }
+    } else {
+        this.w = 0;
+        this.x = 0;
+        this.y = 0;
+        this.z = 1;
+        return;
+    }
 
-	this.w = 0;
-	ww = -0.5*(m1.m11 + m1.m22);
-	if (ww >= 0) {
-	    if (ww >= EPS2) {
-		this.x = (float) Math.sqrt(ww);
-		ww = 0.5/this.x;
-		this.y = (float)(m1.m10*ww);
-		this.z = (float)(m1.m20*ww);
-		return;
-	    }
-	} else {
-	    this.x = 0;
-	    this.y = 0;
-	    this.z = 1;
-	    return;
-	}
+    this.w = 0;
+    ww = -0.5*(m1.m11 + m1.m22);
+    if (ww >= 0) {
+        if (ww >= EPS2) {
+        this.x = (float) Math.sqrt(ww);
+        ww = 0.5/this.x;
+        this.y = (float)(m1.m10*ww);
+        this.z = (float)(m1.m20*ww);
+        return;
+        }
+    } else {
+        this.x = 0;
+        this.y = 0;
+        this.z = 1;
+        return;
+    }
 
-	this.x = 0;
-	ww = 0.5*(1.0 - m1.m22);
-	if (ww >= EPS2) {
-	    this.y = (float) Math.sqrt(ww);
-	    this.z = (float) (m1.m21/(2.0*(double)(this.y)));
-	    return;
-	}
+    this.x = 0;
+    ww = 0.5*(1.0 - m1.m22);
+    if (ww >= EPS2) {
+        this.y = (float) Math.sqrt(ww);
+        this.z = (float) (m1.m21/(2.0*(double)(this.y)));
+        return;
+    }
 
-	this.y = 0;
-	this.z = 1;
+    this.y = 0;
+    this.z = 1;
     }
 
 
@@ -439,52 +439,52 @@ public class Quat4f extends Tuple4f implements java.io.Serializable {
      */
     public final void set(Matrix3f m1)
     {
-	float ww = 0.25f*(m1.m00 + m1.m11 + m1.m22 + 1.0f);
+    float ww = 0.25f*(m1.m00 + m1.m11 + m1.m22 + 1.0f);
 
-	if (ww >= 0) {
-	    if (ww >= EPS2) {
-		this.w = (float) Math.sqrt((double) ww);
-		ww = 0.25f/this.w;
-		this.x = (m1.m21 - m1.m12)*ww;
-		this.y = (m1.m02 - m1.m20)*ww;
-		this.z = (m1.m10 - m1.m01)*ww;
-		return;
-	    }
-	} else {
-	    this.w = 0;
-	    this.x = 0;
-	    this.y = 0;
-	    this.z = 1;
-	    return;
-	}
+    if (ww >= 0) {
+        if (ww >= EPS2) {
+        this.w = (float) Math.sqrt((double) ww);
+        ww = 0.25f/this.w;
+        this.x = (m1.m21 - m1.m12)*ww;
+        this.y = (m1.m02 - m1.m20)*ww;
+        this.z = (m1.m10 - m1.m01)*ww;
+        return;
+        }
+    } else {
+        this.w = 0;
+        this.x = 0;
+        this.y = 0;
+        this.z = 1;
+        return;
+    }
 
-	this.w = 0;
-	ww = -0.5f*(m1.m11 + m1.m22);
-	if (ww >= 0) {
-	    if (ww >= EPS2) {
-		this.x = (float) Math.sqrt((double) ww);
-		ww = 0.5f/this.x;
-		this.y = m1.m10*ww;
-		this.z = m1.m20*ww;
-		return;
-	    }
-	} else {
-	    this.x = 0;
-	    this.y = 0;
-	    this.z = 1;
-	    return;
-	}
+    this.w = 0;
+    ww = -0.5f*(m1.m11 + m1.m22);
+    if (ww >= 0) {
+        if (ww >= EPS2) {
+        this.x = (float) Math.sqrt((double) ww);
+        ww = 0.5f/this.x;
+        this.y = m1.m10*ww;
+        this.z = m1.m20*ww;
+        return;
+        }
+    } else {
+        this.x = 0;
+        this.y = 0;
+        this.z = 1;
+        return;
+    }
 
-	this.x = 0;
-	ww =  0.5f*(1.0f - m1.m22);
-	if (ww >= EPS2) {
-	    this.y = (float) Math.sqrt((double) ww);
-	    this.z = m1.m21/(2.0f*this.y);
-	    return;
-	}
+    this.x = 0;
+    ww =  0.5f*(1.0f - m1.m22);
+    if (ww >= EPS2) {
+        this.y = (float) Math.sqrt((double) ww);
+        this.z = m1.m21/(2.0f*this.y);
+        return;
+    }
 
-	this.y = 0;
-	this.z = 1;
+    this.y = 0;
+    this.z = 1;
     }
 
 
@@ -495,52 +495,52 @@ public class Quat4f extends Tuple4f implements java.io.Serializable {
      */
     public final void set(Matrix3d m1)
     {
-	double ww = 0.25*(m1.m00 + m1.m11 + m1.m22 + 1.0f);
+    double ww = 0.25*(m1.m00 + m1.m11 + m1.m22 + 1.0f);
 
-	if (ww >= 0) {
-	    if (ww >= EPS2) {
-		this.w = (float) Math.sqrt(ww);
-		ww = 0.25/this.w;
-		this.x = (float) ((m1.m21 - m1.m12)*ww);
-		this.y = (float) ((m1.m02 - m1.m20)*ww);
-		this.z = (float) ((m1.m10 - m1.m01)*ww);
-		return;
-	    }
-	} else {
-	    this.w = 0;
-	    this.x = 0;
-	    this.y = 0;
-	    this.z = 1;
-	    return;
-	}
+    if (ww >= 0) {
+        if (ww >= EPS2) {
+        this.w = (float) Math.sqrt(ww);
+        ww = 0.25/this.w;
+        this.x = (float) ((m1.m21 - m1.m12)*ww);
+        this.y = (float) ((m1.m02 - m1.m20)*ww);
+        this.z = (float) ((m1.m10 - m1.m01)*ww);
+        return;
+        }
+    } else {
+        this.w = 0;
+        this.x = 0;
+        this.y = 0;
+        this.z = 1;
+        return;
+    }
 
-	this.w = 0;
-	ww = -0.5*(m1.m11 + m1.m22);
-	if (ww >= 0) {
-	    if (ww >= EPS2) {
-		this.x = (float) Math.sqrt(ww);
-		ww = 0.5/this.x;
-		this.y = (float) (m1.m10*ww);
-		this.z = (float) (m1.m20*ww);
-		return;
-	    }
-	} else {
-	    this.x = 0;
-	    this.y = 0;
-	    this.z = 1;
-	    return;
-	}
+    this.w = 0;
+    ww = -0.5*(m1.m11 + m1.m22);
+    if (ww >= 0) {
+        if (ww >= EPS2) {
+        this.x = (float) Math.sqrt(ww);
+        ww = 0.5/this.x;
+        this.y = (float) (m1.m10*ww);
+        this.z = (float) (m1.m20*ww);
+        return;
+        }
+    } else {
+        this.x = 0;
+        this.y = 0;
+        this.z = 1;
+        return;
+    }
 
-	this.x = 0;
-	ww = 0.5*(1.0 - m1.m22);
-	if (ww >= EPS2) {
-	    this.y = (float) Math.sqrt(ww);
-	    this.z = (float) (m1.m21/(2.0*(double)(this.y)));
-	    return;
-	}
+    this.x = 0;
+    ww = 0.5*(1.0 - m1.m22);
+    if (ww >= EPS2) {
+        this.y = (float) Math.sqrt(ww);
+        this.z = (float) (m1.m21/(2.0*(double)(this.y)));
+        return;
+    }
 
-	this.y = 0;
-	this.z = 1;
+    this.y = 0;
+    this.z = 1;
     }
 
 
@@ -551,22 +551,22 @@ public class Quat4f extends Tuple4f implements java.io.Serializable {
      */
     public final void set(AxisAngle4f a)
     {
-	float mag,amag;
-	// Quat = cos(theta/2) + sin(theta/2)(roation_axis)
-	amag = (float)Math.sqrt( a.x*a.x + a.y*a.y + a.z*a.z);
-	if (amag < EPS ) {
-	    w = 0.0f;
-	    x = 0.0f;
-	    y = 0.0f;
-	    z = 0.0f;
-	} else {
-	    amag = 1.0f/amag;
-	    mag = (float)Math.sin(a.angle/2.0);
-	    w = (float)Math.cos(a.angle/2.0);
-	    x = a.x*amag*mag;
-	    y = a.y*amag*mag;
-	    z = a.z*amag*mag;
-	}
+    float mag,amag;
+    // Quat = cos(theta/2) + sin(theta/2)(roation_axis)
+    amag = (float)Math.sqrt( a.x*a.x + a.y*a.y + a.z*a.z);
+    if (amag < EPS ) {
+        w = 0.0f;
+        x = 0.0f;
+        y = 0.0f;
+        z = 0.0f;
+    } else {
+        amag = 1.0f/amag;
+        mag = (float)Math.sin(a.angle/2.0);
+        w = (float)Math.cos(a.angle/2.0);
+        x = a.x*amag*mag;
+        y = a.y*amag*mag;
+        z = a.z*amag*mag;
+    }
     }
 
 
@@ -577,24 +577,24 @@ public class Quat4f extends Tuple4f implements java.io.Serializable {
      */
     public final void set(AxisAngle4d a)
     {
-	float mag,amag;
-	// Quat = cos(theta/2) + sin(theta/2)(roation_axis)
+    float mag,amag;
+    // Quat = cos(theta/2) + sin(theta/2)(roation_axis)
 
-	amag = (float)(1.0/Math.sqrt( a.x*a.x + a.y*a.y + a.z*a.z));
+    amag = (float)(1.0/Math.sqrt( a.x*a.x + a.y*a.y + a.z*a.z));
 
-	if (amag < EPS ) {
-	    w = 0.0f;
-	    x = 0.0f;
-	    y = 0.0f;
-	    z = 0.0f;
-	} else {
-	    amag = 1.0f/amag;
-	    mag = (float)Math.sin(a.angle/2.0);
-	    w = (float)Math.cos(a.angle/2.0);
-	    x = (float)a.x*amag*mag;
-	    y = (float)a.y*amag*mag;
-	    z = (float)a.z*amag*mag;
-	}
+    if (amag < EPS ) {
+        w = 0.0f;
+        x = 0.0f;
+        y = 0.0f;
+        z = 0.0f;
+    } else {
+        amag = 1.0f/amag;
+        mag = (float)Math.sin(a.angle/2.0);
+        w = (float)Math.cos(a.angle/2.0);
+        x = (float)a.x*amag*mag;
+        y = (float)a.y*amag*mag;
+        z = (float)a.z*amag*mag;
+    }
 
     }
 
@@ -607,12 +607,12 @@ public class Quat4f extends Tuple4f implements java.io.Serializable {
      *  @param alpha  the alpha interpolation parameter
      */
     public final void interpolate(Quat4f q1, float alpha) {
-	// From "Advanced Animation and Rendering Techniques"
-	// by Watt and Watt pg. 364, function as implemented appeared to be
-	// incorrect.  Fails to choose the same quaternion for the double
-	// covering. Resulting in change of direction for rotations.
-	// Fixed function to negate the first quaternion in the case that the
-	// dot product of q1 and this is negative. Second case was not needed.
+    // From "Advanced Animation and Rendering Techniques"
+    // by Watt and Watt pg. 364, function as implemented appeared to be
+    // incorrect.  Fails to choose the same quaternion for the double
+    // covering. Resulting in change of direction for rotations.
+    // Fixed function to negate the first quaternion in the case that the
+    // dot product of q1 and this is negative. Second case was not needed.
 
      double dot,s1,s2,om,sinom;
 
@@ -650,12 +650,12 @@ public class Quat4f extends Tuple4f implements java.io.Serializable {
     *  @param alpha  the alpha interpolation parameter
     */
     public final void interpolate(Quat4f q1, Quat4f q2, float alpha) {
-	// From "Advanced Animation and Rendering Techniques"
-	// by Watt and Watt pg. 364, function as implemented appeared to be
-	// incorrect.  Fails to choose the same quaternion for the double
-	// covering. Resulting in change of direction for rotations.
-	// Fixed function to negate the first quaternion in the case that the
-	// dot product of q1 and this is negative. Second case was not needed.
+    // From "Advanced Animation and Rendering Techniques"
+    // by Watt and Watt pg. 364, function as implemented appeared to be
+    // incorrect.  Fails to choose the same quaternion for the double
+    // covering. Resulting in change of direction for rotations.
+    // Fixed function to negate the first quaternion in the case that the
+    // dot product of q1 and this is negative. Second case was not needed.
 
      double dot,s1,s2,om,sinom;
 

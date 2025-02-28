@@ -111,7 +111,7 @@ public class Point4d extends Tuple4d implements java.io.Serializable {
      * @since vecmath 1.2
      */
     public Point4d(Tuple3d t1) {
-	super(t1.x, t1.y, t1.z, 1.0);
+    super(t1.x, t1.y, t1.z, 1.0);
     }
 
 
@@ -133,10 +133,10 @@ public class Point4d extends Tuple4d implements java.io.Serializable {
      * @since vecmath 1.2
      */
     public final void set(Tuple3d t1) {
-	this.x = t1.x;
-	this.y = t1.y;
-	this.z = t1.z;
-	this.w = 1.0;
+    this.x = t1.x;
+    this.y = t1.y;
+    this.z = t1.z;
+    this.w = 1.0;
     }
 
 
@@ -182,8 +182,8 @@ public class Point4d extends Tuple4d implements java.io.Serializable {
     * @return  the L-1 distance
     */
     public final double distanceL1(Point4d p1) {
-	return Math.abs(this.x-p1.x) + Math.abs(this.y-p1.y) +
-	    Math.abs(this.z-p1.z) + Math.abs(this.w-p1.w);
+    return Math.abs(this.x-p1.x) + Math.abs(this.y-p1.y) +
+        Math.abs(this.z-p1.z) + Math.abs(this.w-p1.w);
     }
 
     /**
@@ -194,11 +194,11 @@ public class Point4d extends Tuple4d implements java.io.Serializable {
      * @return  the L-infinite distance
      */
     public final double distanceLinf(Point4d p1) {
-	double t1, t2;
-	t1 = Math.max( Math.abs(this.x-p1.x), Math.abs(this.y-p1.y));
-	t2 = Math.max( Math.abs(this.z-p1.z), Math.abs(this.w-p1.w));
+    double t1, t2;
+    t1 = Math.max( Math.abs(this.x-p1.x), Math.abs(this.y-p1.y));
+    t2 = Math.max( Math.abs(this.z-p1.z), Math.abs(this.w-p1.w));
 
-	return Math.max(t1,t2);
+    return Math.max(t1,t2);
     }
 
   /**

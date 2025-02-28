@@ -39,12 +39,12 @@ public abstract class Tuple2d implements java.io.Serializable, Cloneable {
     /**
      * The x coordinate.
      */
-    public	double	x;
+    public    double    x;
 
     /**
      * The y coordinate.
      */
-    public	double	y;
+    public    double    y;
 
 
     /**
@@ -54,8 +54,8 @@ public abstract class Tuple2d implements java.io.Serializable, Cloneable {
      */
     public Tuple2d(double x, double y)
     {
-	this.x = x;
-	this.y = y;
+    this.x = x;
+    this.y = y;
     }
 
 
@@ -65,8 +65,8 @@ public abstract class Tuple2d implements java.io.Serializable, Cloneable {
      */
     public Tuple2d(double[] t)
     {
-	this.x = t[0];
-	this.y = t[1];
+    this.x = t[0];
+    this.y = t[1];
     }
 
 
@@ -76,8 +76,8 @@ public abstract class Tuple2d implements java.io.Serializable, Cloneable {
      */
     public Tuple2d(Tuple2d t1)
     {
-	this.x = t1.x;
-	this.y = t1.y;
+    this.x = t1.x;
+    this.y = t1.y;
     }
 
 
@@ -87,8 +87,8 @@ public abstract class Tuple2d implements java.io.Serializable, Cloneable {
      */
     public Tuple2d(Tuple2f t1)
     {
-	this.x = (double) t1.x;
-	this.y = (double) t1.y;
+    this.x = (double) t1.x;
+    this.y = (double) t1.y;
     }
 
     /**
@@ -96,8 +96,8 @@ public abstract class Tuple2d implements java.io.Serializable, Cloneable {
      */
     public Tuple2d()
     {
-	this.x = 0.0;
-	this.y = 0.0;
+    this.x = 0.0;
+    this.y = 0.0;
     }
 
 
@@ -108,8 +108,8 @@ public abstract class Tuple2d implements java.io.Serializable, Cloneable {
      */
     public final void set(double x, double y)
     {
-	this.x = x;
-	this.y = y;
+    this.x = x;
+    this.y = y;
     }
 
 
@@ -120,8 +120,8 @@ public abstract class Tuple2d implements java.io.Serializable, Cloneable {
      */
     public final void set(double[] t)
     {
-	this.x = t[0];
-	this.y = t[1];
+    this.x = t[0];
+    this.y = t[1];
     }
 
 
@@ -131,8 +131,8 @@ public abstract class Tuple2d implements java.io.Serializable, Cloneable {
      */
     public final void set(Tuple2d t1)
     {
-	this.x = t1.x;
-	this.y = t1.y;
+    this.x = t1.x;
+    this.y = t1.y;
     }
 
 
@@ -142,8 +142,8 @@ public abstract class Tuple2d implements java.io.Serializable, Cloneable {
      */
     public final void set(Tuple2f t1)
     {
-	this.x = (double) t1.x;
-	this.y = (double) t1.y;
+    this.x = (double) t1.x;
+    this.y = (double) t1.y;
     }
 
    /**
@@ -164,8 +164,8 @@ public abstract class Tuple2d implements java.io.Serializable, Cloneable {
      */
     public final void add(Tuple2d t1, Tuple2d t2)
     {
-	this.x = t1.x + t2.x;
-	this.y = t1.y + t2.y;
+    this.x = t1.x + t2.x;
+    this.y = t1.y + t2.y;
     }
 
 
@@ -211,8 +211,8 @@ public abstract class Tuple2d implements java.io.Serializable, Cloneable {
      */
     public final void negate(Tuple2d t1)
     {
-	this.x = -t1.x;
-	this.y = -t1.y;
+    this.x = -t1.x;
+    this.y = -t1.y;
     }
 
 
@@ -221,8 +221,8 @@ public abstract class Tuple2d implements java.io.Serializable, Cloneable {
      */
     public final void negate()
     {
-	this.x = -this.x;
-	this.y = -this.y;
+    this.x = -this.x;
+    this.y = -this.y;
     }
 
 
@@ -234,8 +234,8 @@ public abstract class Tuple2d implements java.io.Serializable, Cloneable {
      */
     public final void scale(double s, Tuple2d t1)
     {
-	this.x = s*t1.x;
-	this.y = s*t1.y;
+    this.x = s*t1.x;
+    this.y = s*t1.y;
     }
 
 
@@ -246,8 +246,8 @@ public abstract class Tuple2d implements java.io.Serializable, Cloneable {
      */
     public final void scale(double s)
     {
-	this.x *= s;
-	this.y *= s;
+    this.x *= s;
+    this.y *= s;
     }
 
 
@@ -289,10 +289,10 @@ public abstract class Tuple2d implements java.io.Serializable, Cloneable {
      */
     @Override
     public int hashCode() {
-	long bits = 1L;
-	bits = VecMathUtil.hashDoubleBits(bits, x);
-	bits = VecMathUtil.hashDoubleBits(bits, y);
-	return VecMathUtil.hashFinish(bits);
+    long bits = 1L;
+    bits = VecMathUtil.hashDoubleBits(bits, x);
+    bits = VecMathUtil.hashDoubleBits(bits, y);
+    return VecMathUtil.hashFinish(bits);
     }
 
 
@@ -544,61 +544,61 @@ public abstract class Tuple2d implements java.io.Serializable, Cloneable {
      */
     @Override
     public Object clone() {
-	// Since there are no arrays we can just use Object.clone()
-	try {
-	    return super.clone();
-	} catch (CloneNotSupportedException e) {
-	    // this shouldn't happen, since we are Cloneable
-	    throw new InternalError();
-	}
+    // Since there are no arrays we can just use Object.clone()
+    try {
+        return super.clone();
+    } catch (CloneNotSupportedException e) {
+        // this shouldn't happen, since we are Cloneable
+        throw new InternalError();
+    }
     }
 
 
-	/**
-	 * Get the <i>x</i> coordinate.
-	 *
-	 * @return the <i>x</i> coordinate.
-	 *
-	 * @since vecmath 1.5
-	 */
-	public final double getX() {
-		return x;
-	}
+    /**
+     * Get the <i>x</i> coordinate.
+     *
+     * @return the <i>x</i> coordinate.
+     *
+     * @since vecmath 1.5
+     */
+    public final double getX() {
+        return x;
+    }
 
 
-	/**
-	 * Set the <i>x</i> coordinate.
-	 *
-	 * @param x  value to <i>x</i> coordinate.
-	 *
-	 * @since vecmath 1.5
-	 */
-	public final void setX(double x) {
-		this.x = x;
-	}
+    /**
+     * Set the <i>x</i> coordinate.
+     *
+     * @param x  value to <i>x</i> coordinate.
+     *
+     * @since vecmath 1.5
+     */
+    public final void setX(double x) {
+        this.x = x;
+    }
 
 
-	/**
-	 * Get the <i>y</i> coordinate.
-	 *
-	 * @return the <i>y</i> coordinate.
-	 *
-	 * @since vecmath 1.5
-	 */
-	public final double getY() {
-		return y;
-	}
+    /**
+     * Get the <i>y</i> coordinate.
+     *
+     * @return the <i>y</i> coordinate.
+     *
+     * @since vecmath 1.5
+     */
+    public final double getY() {
+        return y;
+    }
 
 
-	/**
-	 * Set the <i>y</i> coordinate.
-	 *
-	 * @param y value to <i>y</i> coordinate.
-	 *
-	 * @since vecmath 1.5
-	 */
-	public final void setY(double y) {
-		this.y = y;
-	}
+    /**
+     * Set the <i>y</i> coordinate.
+     *
+     * @param y value to <i>y</i> coordinate.
+     *
+     * @since vecmath 1.5
+     */
+    public final void setY(double y) {
+        this.y = y;
+    }
 
 }

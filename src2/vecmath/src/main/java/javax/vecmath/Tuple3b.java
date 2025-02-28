@@ -48,17 +48,17 @@ public abstract class Tuple3b implements java.io.Serializable, Cloneable {
     /**
      * The first value.
      */
-    public	byte	x;
+    public    byte    x;
 
     /**
      * The second value.
      */
-    public	byte	y;
+    public    byte    y;
 
     /**
      * The third value.
      */
-    public	byte	z;
+    public    byte    z;
 
 
     /**
@@ -69,9 +69,9 @@ public abstract class Tuple3b implements java.io.Serializable, Cloneable {
      */
     public Tuple3b(byte b1, byte b2, byte b3)
     {
-	this.x = b1;
-	this.y = b2;
-	this.z = b3;
+    this.x = b1;
+    this.y = b2;
+    this.z = b3;
     }
 
 
@@ -81,9 +81,9 @@ public abstract class Tuple3b implements java.io.Serializable, Cloneable {
      */
     public Tuple3b(byte[] t)
     {
-	this.x = t[0];
-	this.y = t[1];
-	this.z = t[2];
+    this.x = t[0];
+    this.y = t[1];
+    this.z = t[2];
     }
 
 
@@ -93,9 +93,9 @@ public abstract class Tuple3b implements java.io.Serializable, Cloneable {
      */
     public Tuple3b(Tuple3b t1)
     {
-	this.x = t1.x;
-	this.y = t1.y;
-	this.z = t1.z;
+    this.x = t1.x;
+    this.y = t1.y;
+    this.z = t1.z;
     }
 
 
@@ -104,9 +104,9 @@ public abstract class Tuple3b implements java.io.Serializable, Cloneable {
      */
     public Tuple3b()
     {
-	this.x = (byte) 0;
-	this.y = (byte) 0;
-	this.z = (byte) 0;
+    this.x = (byte) 0;
+    this.y = (byte) 0;
+    this.z = (byte) 0;
     }
 
 
@@ -118,8 +118,8 @@ public abstract class Tuple3b implements java.io.Serializable, Cloneable {
     public String toString()
     {
         return("("  + ((int)this.x & 0xff) +
-	       ", " + ((int)this.y & 0xff) +
-	       ", " + ((int)this.z & 0xff) + ")");
+           ", " + ((int)this.y & 0xff) +
+           ", " + ((int)this.z & 0xff) + ")");
     }
 
 
@@ -219,9 +219,9 @@ public abstract class Tuple3b implements java.io.Serializable, Cloneable {
      */
     @Override
     public int hashCode() {
-	return ((((int)x & 0xff) <<  0) |
-		(((int)y & 0xff) <<  8) |
-		(((int)z & 0xff) << 16));
+    return ((((int)x & 0xff) <<  0) |
+        (((int)y & 0xff) <<  8) |
+        (((int)z & 0xff) << 16));
     }
 
     /**
@@ -234,84 +234,84 @@ public abstract class Tuple3b implements java.io.Serializable, Cloneable {
      */
     @Override
     public Object clone() {
-	// Since there are no arrays we can just use Object.clone()
-	try {
-	    return super.clone();
-	} catch (CloneNotSupportedException e) {
-	    // this shouldn't happen, since we are Cloneable
-	    throw new InternalError();
-	}
+    // Since there are no arrays we can just use Object.clone()
+    try {
+        return super.clone();
+    } catch (CloneNotSupportedException e) {
+        // this shouldn't happen, since we are Cloneable
+        throw new InternalError();
+    }
     }
 
 
     /**
-	 * Get <i>x</i>, the  first value.
-	 *
-	 * @return the first value.
-	 *
-	 * @since vecmath 1.5
-	 */
-	public final byte getX() {
-		return x;
-	}
+     * Get <i>x</i>, the  first value.
+     *
+     * @return the first value.
+     *
+     * @since vecmath 1.5
+     */
+    public final byte getX() {
+        return x;
+    }
 
 
-	/**
-	 * Set <i>x</i>, the first value.
-	 *
-	 * @param x the first value to set.
-	 *
-	 * @since vecmath 1.5
-	 */
-	public final void setX(byte x) {
-		this.x = x;
-	}
+    /**
+     * Set <i>x</i>, the first value.
+     *
+     * @param x the first value to set.
+     *
+     * @since vecmath 1.5
+     */
+    public final void setX(byte x) {
+        this.x = x;
+    }
 
 
-	/**
-	 * Get <i>y</i>, the second value.
-	 *
-	 * @return the second value.
-	 *
-	 * @since vecmath 1.5
-	 */
-	public final byte getY() {
-		return y;
-	}
+    /**
+     * Get <i>y</i>, the second value.
+     *
+     * @return the second value.
+     *
+     * @since vecmath 1.5
+     */
+    public final byte getY() {
+        return y;
+    }
 
 
-	/**
-	 * Set <i>y</i>, the second value.
-	 *
-	 * @param y the second value to set.
-	 *
-	 * @since vecmath 1.5
-	 */
-	public final void setY(byte y) {
-		this.y = y;
-	}
+    /**
+     * Set <i>y</i>, the second value.
+     *
+     * @param y the second value to set.
+     *
+     * @since vecmath 1.5
+     */
+    public final void setY(byte y) {
+        this.y = y;
+    }
 
-	/**
-	 * Get <i>z</i>, the third value.
-	 *
-	 * @return the third value.
-	 *
-	 * @since vecmath 1.5
-	 */
-	public final byte getZ() {
-		return z;
-	}
+    /**
+     * Get <i>z</i>, the third value.
+     *
+     * @return the third value.
+     *
+     * @since vecmath 1.5
+     */
+    public final byte getZ() {
+        return z;
+    }
 
 
-	/**
-	 * Set <i>z</i>, the third value.
-	 *
-	 * @param z the third value to set.
-	 *
-	 * @since vecmath 1.5
-	 */
-	public final void setZ(byte z) {
-		this.z = z;
-	}
+    /**
+     * Set <i>z</i>, the third value.
+     *
+     * @param z the third value to set.
+     *
+     * @since vecmath 1.5
+     */
+    public final void setZ(byte z) {
+        this.z = z;
+    }
 
 }

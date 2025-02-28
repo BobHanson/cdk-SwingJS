@@ -46,7 +46,7 @@ public class Point3i extends Tuple3i implements java.io.Serializable {
      * @param z the z coordinate
      */
     public Point3i(int x, int y, int z) {
-	super(x, y, z);
+    super(x, y, z);
     }
 
 
@@ -55,7 +55,7 @@ public class Point3i extends Tuple3i implements java.io.Serializable {
      * @param t the array of length 3 containing x, y, and z in order.
      */
     public Point3i(int[] t) {
-	super(t);
+    super(t);
     }
 
 
@@ -65,7 +65,7 @@ public class Point3i extends Tuple3i implements java.io.Serializable {
      * data.
      */
     public Point3i(Tuple3i t1) {
-	super(t1);
+    super(t1);
     }
 
 
@@ -73,7 +73,7 @@ public class Point3i extends Tuple3i implements java.io.Serializable {
      * Constructs and initializes a Point3i to (0,0,0).
      */
     public Point3i() {
-	super();
+    super();
     }
 
 }

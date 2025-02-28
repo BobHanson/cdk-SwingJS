@@ -106,7 +106,7 @@ public class Vector4d extends Tuple4d implements java.io.Serializable {
      * @since vecmath 1.2
      */
     public Vector4d(Tuple3d t1) {
-	super(t1.x, t1.y, t1.z, 0.0);
+    super(t1.x, t1.y, t1.z, 0.0);
     }
 
 
@@ -128,10 +128,10 @@ public class Vector4d extends Tuple4d implements java.io.Serializable {
      * @since vecmath 1.2
      */
     public final void set(Tuple3d t1) {
-	this.x = t1.x;
-	this.y = t1.y;
-	this.z = t1.z;
-	this.w = 0.0;
+    this.x = t1.x;
+    this.y = t1.y;
+    this.z = t1.z;
+    this.w = 0.0;
     }
 
 

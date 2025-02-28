@@ -44,7 +44,7 @@ public class Point2i extends Tuple2i implements java.io.Serializable {
      * @param y the y coordinate
      */
     public Point2i(int x, int y) {
-	super(x, y);
+    super(x, y);
     }
 
 
@@ -53,7 +53,7 @@ public class Point2i extends Tuple2i implements java.io.Serializable {
      * @param t the array of length 2 containing x and y in order.
      */
     public Point2i(int[] t) {
-	super(t);
+    super(t);
     }
 
 
@@ -63,7 +63,7 @@ public class Point2i extends Tuple2i implements java.io.Serializable {
      * data.
      */
     public Point2i(Tuple2i t1) {
-	super(t1);
+    super(t1);
     }
 
 
@@ -71,7 +71,7 @@ public class Point2i extends Tuple2i implements java.io.Serializable {
      * Constructs and initializes a Point2i to (0,0).
      */
     public Point2i() {
-	super();
+    super();
     }
 
 }

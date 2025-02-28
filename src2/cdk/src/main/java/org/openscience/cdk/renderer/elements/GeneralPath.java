@@ -40,6 +40,7 @@ import org.openscience.cdk.renderer.elements.path.LineTo;
 import org.openscience.cdk.renderer.elements.path.MoveTo;
 import org.openscience.cdk.renderer.elements.path.PathElement;
 import org.openscience.cdk.renderer.elements.path.QuadTo;
+import org.openscience.cdk.renderer.generators.standard.ITextString;
 import org.openscience.cdk.renderer.generators.standard.TextOutline;
 
 /**
@@ -66,7 +67,14 @@ public class GeneralPath implements IRenderingElement {
     /** Winding rule for determining path interior. */
     public final int               winding;
 
-	public TextOutline textOutline;
+    /**
+     * Maintain the text string and metrics 
+     * needed for rendering implementations that 
+     * do not use glyph stroking, such as JavaScript.
+     * 
+     * @see TextOutline
+     */
+    public ITextString textString;
 
     /**
      * @see PathIterator#WIND_EVEN_ODD
@@ -161,8 +169,8 @@ public class GeneralPath implements IRenderingElement {
             pathIt.next();
         }
         GeneralPath path = new GeneralPath(elements, color, pathIt.getWindingRule(), 0d, true);
-        if (shape instanceof TextOutline.TextShape)
-        	path.textOutline = ((TextOutline.TextShape) shape).textOutline;
+        if (shape instanceof ITextString)
+            path.textString = (ITextString) shape;
         return path;
     }
 

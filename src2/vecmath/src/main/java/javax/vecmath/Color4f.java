@@ -53,7 +53,7 @@ public class Color4f extends Tuple4f implements java.io.Serializable {
      * @param w the alpha value
      */
     public Color4f(float x, float y, float z, float w) {
-	super(x,y,z,w);
+    super(x,y,z,w);
     }
 
 
@@ -62,7 +62,7 @@ public class Color4f extends Tuple4f implements java.io.Serializable {
      * @param c the array of length 4 containing r,g,b,a in order
      */
     public Color4f(float[] c) {
-	super(c);
+    super(c);
     }
 
 
@@ -71,7 +71,7 @@ public class Color4f extends Tuple4f implements java.io.Serializable {
      * @param c1 the Color4f containing the initialization r,g,b,a data
      */
     public Color4f(Color4f c1) {
-	super(c1);
+    super(c1);
     }
 
 
@@ -80,7 +80,7 @@ public class Color4f extends Tuple4f implements java.io.Serializable {
      * @param t1 the Tuple4f containing the initialization r,g,b,a data
      */
     public Color4f(Tuple4f t1) {
-	super(t1);
+    super(t1);
     }
 
 
@@ -89,7 +89,7 @@ public class Color4f extends Tuple4f implements java.io.Serializable {
      * @param t1 the Tuple4d containing the initialization r,g,b,a data
      */
     public Color4f(Tuple4d t1) {
-	super(t1);
+    super(t1);
     }
 
 
@@ -105,10 +105,10 @@ public class Color4f extends Tuple4f implements java.io.Serializable {
      * @since vecmath 1.2
      */
     public Color4f(Color color) {
-	super((float)color.getRed() / 255.0f,
-	      (float)color.getGreen() / 255.0f,
-	      (float)color.getBlue() / 255.0f,
-	      (float)color.getAlpha() / 255.0f);
+    super((float)color.getRed() / 255.0f,
+          (float)color.getGreen() / 255.0f,
+          (float)color.getBlue() / 255.0f,
+          (float)color.getAlpha() / 255.0f);
     }
 
 
@@ -116,7 +116,7 @@ public class Color4f extends Tuple4f implements java.io.Serializable {
      * Constructs and initializes a Color4f to (0.0, 0.0, 0.0, 0.0).
      */
     public Color4f() {
-	super();
+    super();
     }
 
 
@@ -131,10 +131,10 @@ public class Color4f extends Tuple4f implements java.io.Serializable {
      * @since vecmath 1.2
      */
     public final void set(Color color) {
-	x = (float)color.getRed() / 255.0f;
-	y = (float)color.getGreen() / 255.0f;
-	z = (float)color.getBlue() / 255.0f;
-	w = (float)color.getAlpha() / 255.0f;
+    x = (float)color.getRed() / 255.0f;
+    y = (float)color.getGreen() / 255.0f;
+    z = (float)color.getBlue() / 255.0f;
+    w = (float)color.getAlpha() / 255.0f;
     }
 
 
@@ -147,12 +147,12 @@ public class Color4f extends Tuple4f implements java.io.Serializable {
      * @since vecmath 1.2
      */
     public final Color get() {
-	int r = Math.round(x * 255.0f);
-	int g = Math.round(y * 255.0f);
-	int b = Math.round(z * 255.0f);
-	int a = Math.round(w * 255.0f);
+    int r = Math.round(x * 255.0f);
+    int g = Math.round(y * 255.0f);
+    int b = Math.round(z * 255.0f);
+    int a = Math.round(w * 255.0f);
 
-	return new Color(r, g, b, a);
+    return new Color(r, g, b, a);
     }
 
 }

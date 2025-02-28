@@ -39,22 +39,22 @@ public abstract class Tuple4f implements java.io.Serializable, Cloneable {
   /**
    * The x coordinate.
    */
-  public	float	x;
+  public    float    x;
 
   /**
    * The y coordinate.
    */
-  public	float	y;
+  public    float    y;
 
   /**
    * The z coordinate.
    */
-  public	float	z;
+  public    float    z;
 
   /**
    * The w coordinate.
    */
-  public	float	w;
+  public    float    w;
 
 
   /**
@@ -133,10 +133,10 @@ public abstract class Tuple4f implements java.io.Serializable, Cloneable {
      */
     public final void set(float x, float y, float z, float w)
     {
-	this.x = x;
-	this.y = y;
-	this.z = z;
-	this.w = w;
+    this.x = x;
+    this.y = y;
+    this.z = z;
+    this.w = w;
     }
 
 
@@ -147,10 +147,10 @@ public abstract class Tuple4f implements java.io.Serializable, Cloneable {
      */
     public final void set(float[] t)
     {
-	this.x = t[0];
-	this.y = t[1];
-	this.z = t[2];
-	this.w = t[3];
+    this.x = t[0];
+    this.y = t[1];
+    this.z = t[2];
+    this.w = t[3];
     }
 
 
@@ -160,10 +160,10 @@ public abstract class Tuple4f implements java.io.Serializable, Cloneable {
      */
     public final void set(Tuple4f t1)
     {
-	this.x = t1.x;
-	this.y = t1.y;
-	this.z = t1.z;
-	this.w = t1.w;
+    this.x = t1.x;
+    this.y = t1.y;
+    this.z = t1.z;
+    this.w = t1.w;
     }
 
 
@@ -173,10 +173,10 @@ public abstract class Tuple4f implements java.io.Serializable, Cloneable {
      */
     public final void set(Tuple4d t1)
     {
-	this.x = (float) t1.x;
-	this.y = (float) t1.y;
-	this.z = (float) t1.z;
-	this.w = (float) t1.w;
+    this.x = (float) t1.x;
+    this.y = (float) t1.y;
+    this.z = (float) t1.z;
+    this.w = (float) t1.w;
     }
 
 
@@ -437,12 +437,12 @@ public abstract class Tuple4f implements java.io.Serializable, Cloneable {
      */
     @Override
     public int hashCode() {
-	long bits = 1L;
-	bits = VecMathUtil.hashFloatBits(bits, x);
-	bits = VecMathUtil.hashFloatBits(bits, y);
-	bits = VecMathUtil.hashFloatBits(bits, z);
-	bits = VecMathUtil.hashFloatBits(bits, w);
-	return VecMathUtil.hashFinish(bits);
+    long bits = 1L;
+    bits = VecMathUtil.hashFloatBits(bits, x);
+    bits = VecMathUtil.hashFloatBits(bits, y);
+    bits = VecMathUtil.hashFloatBits(bits, z);
+    bits = VecMathUtil.hashFloatBits(bits, w);
+    return VecMathUtil.hashFinish(bits);
     }
 
 
@@ -691,106 +691,106 @@ public abstract class Tuple4f implements java.io.Serializable, Cloneable {
      */
     @Override
     public Object clone() {
-	// Since there are no arrays we can just use Object.clone()
-	try {
-	    return super.clone();
-	} catch (CloneNotSupportedException e) {
-	    // this shouldn't happen, since we are Cloneable
-	    throw new InternalError();
-	}
+    // Since there are no arrays we can just use Object.clone()
+    try {
+        return super.clone();
+    } catch (CloneNotSupportedException e) {
+        // this shouldn't happen, since we are Cloneable
+        throw new InternalError();
+    }
     }
 
     /**
-	 * Get the <i>x</i> coordinate.
-	 *
-	 * @return the <i>x</i> coordinate.
-	 *
-	 * @since vecmath 1.5
-	 */
-	public final float getX() {
-		return x;
-	}
+     * Get the <i>x</i> coordinate.
+     *
+     * @return the <i>x</i> coordinate.
+     *
+     * @since vecmath 1.5
+     */
+    public final float getX() {
+        return x;
+    }
 
 
-	/**
-	 * Set the <i>x</i> coordinate.
-	 *
-	 * @param x  value to <i>x</i> coordinate.
-	 *
-	 * @since vecmath 1.5
-	 */
-	public final void setX(float x) {
-		this.x = x;
-	}
+    /**
+     * Set the <i>x</i> coordinate.
+     *
+     * @param x  value to <i>x</i> coordinate.
+     *
+     * @since vecmath 1.5
+     */
+    public final void setX(float x) {
+        this.x = x;
+    }
 
 
-	/**
-	 * Get the <i>y</i> coordinate.
-	 *
-	 * @return the <i>y</i> coordinate.
-	 *
-	 * @since vecmath 1.5
-	 */
-	public final float getY() {
-		return y;
-	}
+    /**
+     * Get the <i>y</i> coordinate.
+     *
+     * @return the <i>y</i> coordinate.
+     *
+     * @since vecmath 1.5
+     */
+    public final float getY() {
+        return y;
+    }
 
 
-	/**
-	 * Set the <i>y</i> coordinate.
-	 *
-	 * @param y value to <i>y</i> coordinate.
-	 *
-	 * @since vecmath 1.5
-	 */
-	public final void setY(float y) {
-		this.y = y;
-	}
+    /**
+     * Set the <i>y</i> coordinate.
+     *
+     * @param y value to <i>y</i> coordinate.
+     *
+     * @since vecmath 1.5
+     */
+    public final void setY(float y) {
+        this.y = y;
+    }
 
-	/**
-	 * Get the <i>z</i> coordinate.
-	 *
-	 * @return the <i>z</i> coordinate.
-	 *
-	 * @since vecmath 1.5
-	 */
-	public final float getZ() {
-		return z;
-	}
-
-
-	/**
-	 * Set the <i>z</i> coordinate.
-	 *
-	 * @param z value to <i>z</i> coordinate.
-	 *
-	 * @since vecmath 1.5
-	 */
-	public final void setZ(float z) {
-		this.z = z;
-	}
+    /**
+     * Get the <i>z</i> coordinate.
+     *
+     * @return the <i>z</i> coordinate.
+     *
+     * @since vecmath 1.5
+     */
+    public final float getZ() {
+        return z;
+    }
 
 
-	/**
-	 * Get the <i>w</i> coordinate.
-	 *
-	 * @return the <i>w</i> coordinate.
-	 *
-	 * @since vecmath 1.5
-	 */
-	public final float getW() {
-		return w;
-	}
+    /**
+     * Set the <i>z</i> coordinate.
+     *
+     * @param z value to <i>z</i> coordinate.
+     *
+     * @since vecmath 1.5
+     */
+    public final void setZ(float z) {
+        this.z = z;
+    }
 
 
-	/**
-	 * Set the <i>w</i> coordinate.
-	 *
-	 * @param w value to <i>w</i> coordinate.
-	 *
-	 * @since vecmath 1.5
-	 */
-	public final void setW(float w) {
-		this.w = w;
-	}
+    /**
+     * Get the <i>w</i> coordinate.
+     *
+     * @return the <i>w</i> coordinate.
+     *
+     * @since vecmath 1.5
+     */
+    public final float getW() {
+        return w;
+    }
+
+
+    /**
+     * Set the <i>w</i> coordinate.
+     *
+     * @param w value to <i>w</i> coordinate.
+     *
+     * @since vecmath 1.5
+     */
+    public final void setW(float w) {
+        this.w = w;
+    }
 }

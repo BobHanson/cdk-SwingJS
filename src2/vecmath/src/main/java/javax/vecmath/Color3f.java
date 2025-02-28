@@ -60,7 +60,7 @@ public class Color3f extends Tuple3f implements java.io.Serializable {
      * @param v the array of length 3 containing xyz in order
      */
     public Color3f(float[] v) {
-	super(v);
+    super(v);
     }
 
 
@@ -69,7 +69,7 @@ public class Color3f extends Tuple3f implements java.io.Serializable {
      * @param v1 the Color3f containing the initialization x y z data
      */
     public Color3f(Color3f v1) {
-	super(v1);
+    super(v1);
     }
 
 
@@ -78,7 +78,7 @@ public class Color3f extends Tuple3f implements java.io.Serializable {
      * @param t1 the Tuple3f containing the initialization x y z data
      */
     public Color3f(Tuple3f t1) {
-	super(t1);
+    super(t1);
     }
 
 
@@ -87,7 +87,7 @@ public class Color3f extends Tuple3f implements java.io.Serializable {
      * @param t1 the Tuple3d containing the initialization x y z data
      */
     public Color3f(Tuple3d t1) {
-	super(t1);
+    super(t1);
     }
 
 
@@ -103,9 +103,9 @@ public class Color3f extends Tuple3f implements java.io.Serializable {
      * @since vecmath 1.2
      */
     public Color3f(Color color) {
-	super((float)color.getRed() / 255.0f,
-	      (float)color.getGreen() / 255.0f,
-	      (float)color.getBlue() / 255.0f);
+    super((float)color.getRed() / 255.0f,
+          (float)color.getGreen() / 255.0f,
+          (float)color.getBlue() / 255.0f);
     }
 
 
@@ -128,9 +128,9 @@ public class Color3f extends Tuple3f implements java.io.Serializable {
      * @since vecmath 1.2
      */
     public final void set(Color color) {
-	x = (float)color.getRed() / 255.0f;
-	y = (float)color.getGreen() / 255.0f;
-	z = (float)color.getBlue() / 255.0f;
+    x = (float)color.getRed() / 255.0f;
+    y = (float)color.getGreen() / 255.0f;
+    z = (float)color.getBlue() / 255.0f;
     }
 
 
@@ -143,11 +143,11 @@ public class Color3f extends Tuple3f implements java.io.Serializable {
      * @since vecmath 1.2
      */
     public final Color get() {
-	int r = Math.round(x * 255.0f);
-	int g = Math.round(y * 255.0f);
-	int b = Math.round(z * 255.0f);
+    int r = Math.round(x * 255.0f);
+    int g = Math.round(y * 255.0f);
+    int b = Math.round(z * 255.0f);
 
-	return new Color(r, g, b);
+    return new Color(r, g, b);
     }
 
 }
