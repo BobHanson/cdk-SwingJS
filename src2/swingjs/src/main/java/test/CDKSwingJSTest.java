@@ -58,15 +58,15 @@ public class CDKSwingJSTest {
         try {
             mol = InChIGeneratorFactory.getInstance().getInChIToStructure(inchi, getBuilder(), "")
                     .getAtomContainer();
+            mol = AtomContainerManipulator.suppressHydrogens(mol);
             StructureDiagramGenerator sdg = new StructureDiagramGenerator();
-            sdg.generateCoordinates(AtomContainerManipulator.suppressHydrogens(mol));
+            sdg.generateCoordinates(mol);
             String inchi2 = InChIGeneratorFactory.getInstance().getInChIGenerator(mol).getInchi();
             System.out.println(inchi);
             System.out.println(inchi2);
             System.out.println(inchi.equals(inchi2));
 
             // inchi to mol
-
             String smi = new SmilesGenerator(SmiFlavor.Isomeric).create(mol);
             System.out.println(smi);
             // C=1C=C(C=CC1\C(\[H])=C(/[H])\C(=O)OC[C@]2([H])[C@]([H])([C@@]([H])([C@]([H])([C@]([H])(OC=3C=C4C(C=C(C=C4O[C@]5([C@]([C@@]([C@]([C@](CO)([H])O5)([H])O)([H])O)([H])O)[H])O)=NC3C=6C=CC(=C(C6)O)O)O2)O[C@]7([C@]([C@@]([C@](CO7)([H])O)([H])O)([H])O)[H])O)O)O
@@ -101,14 +101,14 @@ public class CDKSwingJSTest {
             bos.close();
             System.out.println("textcdk.png created");
             bos = new FileOutputStream("c:/temp/testcdk.svg");
-            String svg = dg.depict(mol).toSvgStr();
+            String svg = dg.depict(mol).toSvgStr(Depiction.UNITS_PX);
             bos.write(svg.getBytes());
             bos.close();
             System.out.println("textcdk.svg created");
-            bos = new FileOutputStream("c:/temp/testcdk.pdf");
-            dg.depict(mol).writeTo(Depiction.PDF_FMT, bos);
-            bos.close();
-            System.out.println("textcdk.pdf created");
+//            bos = new FileOutputStream("c:/temp/testcdk.pdf");
+//            dg.depict(mol).writeTo(Depiction.PDF_FMT, bos);
+//            bos.close();
+//            System.out.println("textcdk.pdf created");
             
 
 
