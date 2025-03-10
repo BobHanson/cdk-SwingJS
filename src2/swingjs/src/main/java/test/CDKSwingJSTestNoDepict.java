@@ -13,24 +13,25 @@ import org.openscience.cdk.templates.TestMoleculeFactory;
 import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
+import io.github.dan2097.jnainchi.inchi.InchiLibrary;
 import swingjs.SwingJSLogger;
 
 public class CDKSwingJSTestNoDepict {
     private static boolean isJS = /** @j2sNative true || */false;
-    public static void main(String[] args) {
-        if (isJS) {
-            LoggingToolFactory.setLoggingToolClass(SwingJSLogger.class);
-        }
-        try {
-            InChIGeneratorFactory.getInstance(() -> {
-                test0();
-            });
-        } catch (CDKException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-    
-    }
+
+	public static void main(String[] args) {
+		if (isJS) {
+			LoggingToolFactory.setLoggingToolClass(SwingJSLogger.class);
+			InchiLibrary.class.getName();
+		}
+		try {
+			test0();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
     
     private static IChemObjectBuilder getBuilder() {
         return DefaultChemObjectBuilder.getInstance();

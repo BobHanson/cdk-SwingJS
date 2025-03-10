@@ -16,21 +16,30 @@
    	<loadresource property="coreclasses">
        <file file="j2sclasslist.txt"/>
     </loadresource>
-
-   	<loadresource property="coreclasses-nodepict">
-       <file file="j2sclasslist-nodepict.txt"/>
-    </loadresource>
-
     <antcall target="call-core">
         <param name="call-core.name" value="_cdk" />
         <param name="call-core.list" value="
          	${coreclasses}
         	" />
     </antcall>
+
+   	<loadresource property="coreclasses-nodepict">
+       <file file="j2sclasslist-nodepict.txt"/>
+    </loadresource>
     <antcall target="call-core">
         <param name="call-core.name" value="_cdk-nodepict" />
         <param name="call-core.list" value="
          	${coreclasses-nodepict}
+        	" />
+    </antcall>
+
+   	<loadresource property="coreclasses-swingjs-CDK">
+       <file file="j2sclasslist-swingjs-CDK.txt"/>
+    </loadresource>
+	<antcall target="call-core">
+        <param name="call-core.name" value="_swingjs-CDK" />
+        <param name="call-core.list" value="
+         	${coreclasses-swingjs-CDK}
         	" />
     </antcall>
    	
