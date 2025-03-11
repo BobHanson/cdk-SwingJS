@@ -29,10 +29,14 @@ import java.awt.Rectangle;
 import java.awt.Shape;
 import java.awt.font.FontRenderContext;
 import java.awt.font.GlyphVector;
+import java.awt.font.LineMetrics;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.PathIterator;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
+import java.util.Arrays;
+
+import sun.font.StandardGlyphVector;
 
 /**
  * Immutable outline of text. The outline is maintained as a Java 2D shape
@@ -70,7 +74,7 @@ final public class TextOutline {
      * @param text the text to create an outline of
      * @param font the font style, size, and shape that defines the outline
      */
-    TextOutline(final String text, final Font font) {
+    public TextOutline(final String text, final Font font) {
         this(text, font.createGlyphVector(new FontRenderContext(new AffineTransform(), true, true), text));
     }
 
@@ -97,7 +101,38 @@ final public class TextOutline {
         this.glyphs = glyphs;
         this.outline = outline;
         this.transform = transform;
-    }
+        
+        
+
+//   //// BH testing
+//   //
+//   StandardGlyphVector g = (StandardGlyphVector) glyphs;
+//   //// For each glyph return posx, posy, advx, advy, visx, visy, visw, vish.
+//if (text.length() > 0) {
+//   	LineMetrics m = g.getFont().getLineMetrics(text, FONT_RENDER_CONTEXT);
+//   	System.out.println(g.getFont() + "a=" + m.getAscent() + " d=" + m.getDescent() + " h=" + m.getHeight() + "\n");
+//   	System.out.println(text + " outB " + glyphs.getOutline().getBounds2D()); 
+//   	System.out.println(text + " outBB " + glyphs.getOutline().getBounds2D().getBounds2D()); // same
+//   	System.out.println(text + " visB " + glyphs.getVisualBounds()); // also same
+//   	System.out.println(text + " logB " + glyphs.getLogicalBounds());
+//   	System.out.println(text + " pos " + Arrays.toString(glyphs.getGlyphPositions(0, text.length(), null)));
+//   //
+//   //
+//   //	
+//   //	
+//   //	
+////   	// these next two are identical
+//   	System.out.println("TextOutline " + text + " L " + str(g.getLogicalBounds()));
+//   	Rectangle2D b = g.getFont().getStringBounds(text, FONT_RENDER_CONTEXT);
+//   	System.out.println("TextOutline " + text + " F " + str(b));
+//   }
+//   		
+   	
+}
+    
+private String str(Rectangle2D b) {
+return "[" + b.getX() + ", " + b.getX() + ", " + b.getWidth()  + ", " + b.getHeight() + "]";
+}
 
     /**
      * The text which the outline displays.

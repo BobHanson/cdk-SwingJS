@@ -13,6 +13,16 @@
    	<echo>creating and compressing core files - warnings are OK; "does not exist" is trouble</echo>
    	<echo>reading core class list from file coreclasses</echo>   	
 
+   	<loadresource property="coreclasses-swingjs-cdk">
+       <file file="j2sclasslist-swingjs-cdk.txt"/>
+    </loadresource>
+	<antcall target="call-core">
+        <param name="call-core.name" value="_swingjs-cdk" />
+        <param name="call-core.list" value="
+         	${coreclasses-swingjs-cdk}
+        	" />
+    </antcall>
+   	
    	<loadresource property="coreclasses">
        <file file="j2sclasslist.txt"/>
     </loadresource>
@@ -33,16 +43,6 @@
         	" />
     </antcall>
 
-   	<loadresource property="coreclasses-swingjs-CDK">
-       <file file="j2sclasslist-swingjs-CDK.txt"/>
-    </loadresource>
-	<antcall target="call-core">
-        <param name="call-core.name" value="_swingjs-CDK" />
-        <param name="call-core.list" value="
-         	${coreclasses-swingjs-CDK}
-        	" />
-    </antcall>
-   	
     <zip basedir="${site.dir}" 
     	 includes="**/*"
    	     destfile="${dist.dir}/${project}.zip" 

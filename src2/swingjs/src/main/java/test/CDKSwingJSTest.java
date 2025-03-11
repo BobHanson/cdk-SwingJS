@@ -16,6 +16,7 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.io.MDLV2000Writer;
 import org.openscience.cdk.layout.StructureDiagramGenerator;
+import org.openscience.cdk.renderer.generators.standard.TextOutline;
 import org.openscience.cdk.smiles.SmiFlavor;
 import org.openscience.cdk.smiles.SmilesGenerator;
 import org.openscience.cdk.smiles.SmilesParser;
@@ -37,6 +38,7 @@ public class CDKSwingJSTest {
 				InchiLibrary.class.getName();
 			}
 			InchiAPI.initAndRun(() -> {
+				//testFonts(); //
 				test0();
 			});
 		} catch (Exception e) {
@@ -57,9 +59,17 @@ public class CDKSwingJSTest {
 				+ "/b8-3+/t24-,27-,28-,31+,32-,33-,34+,35+,36-,37-,38-,39+,40-,41-/m1/s1";
 
 		// ene inchi = "InChI=1S/C4H8/c1-3-4-2/h3-4H,1-2H3/b4-3+";
+		// morphine 
+		inchi = "InChI=1S/C17H19NO3/c1-18-7-6-17-10-3-5-13(20)16(17)21-15-12(19)4-2-9(14(15)17)8-11(10)18/h2-5,10-11,13,16,19-20H,6-8H2,1H3/t10-,11+,13-,16-,17-/m0/s1";
 
 		// allene inchi = "InChI=1S/C6H10/c1-3-5-6-4-2/h3,6H,4H2,1-2H3/t5-/m0/s1";
+		// 2-propanol inchi = "InChI=1S/C4H10O/c1-3-4(2)5/h4-5H,3H2,1-2H3/t4-/m0/s1";
 		try {
+			getDataURIFromInChI(inchi);
+
+			
+			
+			
 			IAtomContainer mol = InChIGeneratorFactory.getInstance().getInChIToStructure(inchi, getBuilder(), "").getAtomContainer();
 			mol = AtomContainerManipulator.suppressHydrogens(mol);
 			StructureDiagramGenerator sdg = new StructureDiagramGenerator();
@@ -67,6 +77,8 @@ public class CDKSwingJSTest {
 			String inchi2 = InChIGeneratorFactory.getInstance().getInChIGenerator(mol).getInchi();
 			System.out.println(inchi);
 			System.out.println(inchi2);
+			
+			//inchi2 = "InChI=1S/C17H19NO3/c1-18-7-6-17-10-3-5-13(20)16(17)21-15-12(19)4-2-9(14(15)17)8-11(10)18/h2-5,10-11,13,16,19-20H,6-8H2,1H3/t10-,11+,13-,16-,17-/m0/s1";
 			System.out.println("inchi->mol->inchi " + inchi.equals(inchi2));
 
 			// mol to MOL file
@@ -88,10 +100,12 @@ public class CDKSwingJSTest {
 			String inchi3 = InChIGeneratorFactory.getInstance().getInChIGenerator(mol).getInchi();
 			System.out.println(inchi3);
 			System.out.println("inchi->mol->smiles->mol->inchi " + inchi3.equals(inchi));
-//			getImagesForInChI(inchi2);
 			
+			getImagesForInChI(inchi2);
+
+			// to image 
+			@SuppressWarnings("unused")
 			String s = getDataURIFromInChI(inchi2);
-			
 			/**
 			 * @j2sNative 
 			 * 
@@ -166,12 +180,36 @@ public class CDKSwingJSTest {
 	} 
 	
 
-//    public static void testFonts() {
-//        // used for testing font business
-//        String[] s = new String[] { "H", "j", "Hj", "HjHjHj" };
-//        Font f = new Font(Font.SANS_SERIF, Font.PLAIN, 20);
-//        for (int i = 0; i < s.length; i++) {
-//            TextOutline t = new TextOutline(s[i], f);
-//        }
-//    }
+
+	/**
+	 * @j2sAlias get2DMolFromInChI
+	 * 
+	 * @param inchi
+	 * @return
+	 */
+	public static String get2DMolFromInChI(String inchi) {
+		try {
+	    	IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
+			IAtomContainer mol = InChIGeneratorFactory.getInstance()
+					.getInChIToStructure(inchi, builder, "")
+					.getAtomContainer();
+			mol = AtomContainerManipulator.suppressHydrogens(mol);
+			new StructureDiagramGenerator().generateCoordinates(mol);
+			ByteArrayOutputStream os = new ByteArrayOutputStream();
+			new MDLV2000Writer(os).write(mol);
+			return new String(os.toByteArray());
+		} catch (Throwable e) {
+			return null;
+		}
+	} 
+	
+    public static void testFonts() {
+        // used for testing font business
+        String[] s = new String[] { "|","H", "j", "Hj", "HjHjHj" };
+        Font f = new Font(Font.SANS_SERIF, Font.PLAIN, 20);
+        System.out.println(f);
+        for (int i = 0; i < s.length; i++) {
+            TextOutline t = new TextOutline(s[i], f);
+        }
+    }
 }
