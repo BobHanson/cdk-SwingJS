@@ -566,6 +566,12 @@ Module['ready'] = new Promise(function(resolve, reject) {
       }
     
 
+      if (!Object.getOwnPropertyDescriptor(Module['ready'], '_IXA_MOL_ReadAuxInfo')) {
+        Object.defineProperty(Module['ready'], '_IXA_MOL_ReadAuxInfo', { configurable: true, get: function() { abort('You are getting _IXA_MOL_ReadAuxInfo on the Promise object, instead of the instance. Use .then() to get called back with the instance, see the MODULARIZE docs in src/settings.js') } });
+        Object.defineProperty(Module['ready'], '_IXA_MOL_ReadAuxInfo', { configurable: true, set: function() { abort('You are setting _IXA_MOL_ReadAuxInfo on the Promise object, instead of the instance. Use .then() to get called back with the instance, see the MODULARIZE docs in src/settings.js') } });
+      }
+    
+
       if (!Object.getOwnPropertyDescriptor(Module['ready'], '_IXA_MOL_ReserveSpace')) {
         Object.defineProperty(Module['ready'], '_IXA_MOL_ReserveSpace', { configurable: true, get: function() { abort('You are getting _IXA_MOL_ReserveSpace on the Promise object, instead of the instance. Use .then() to get called back with the instance, see the MODULARIZE docs in src/settings.js') } });
         Object.defineProperty(Module['ready'], '_IXA_MOL_ReserveSpace', { configurable: true, set: function() { abort('You are setting _IXA_MOL_ReserveSpace on the Promise object, instead of the instance. Use .then() to get called back with the instance, see the MODULARIZE docs in src/settings.js') } });
@@ -5325,6 +5331,9 @@ var _IXA_MOL_SetStereoParity = Module["_IXA_MOL_SetStereoParity"] = createExport
 var _IXA_MOL_ReadInChI = Module["_IXA_MOL_ReadInChI"] = createExportWrapper("IXA_MOL_ReadInChI");
 
 /** @type {function(...*):?} */
+var _IXA_MOL_ReadAuxInfo = Module["_IXA_MOL_ReadAuxInfo"] = createExportWrapper("IXA_MOL_ReadAuxInfo");
+
+/** @type {function(...*):?} */
 var _IXA_MOL_ReadMolfile = Module["_IXA_MOL_ReadMolfile"] = createExportWrapper("IXA_MOL_ReadMolfile");
 
 /** @type {function(...*):?} */
@@ -5423,8 +5432,8 @@ unexportedRuntimeFunction('intArrayFromString', false);
 unexportedRuntimeFunction('intArrayToString', false);
 Module["ccall"] = ccall;
 Module["cwrap"] = cwrap;
-unexportedRuntimeFunction('setValue', false);
-unexportedRuntimeFunction('getValue', false);
+Module["setValue"] = setValue;
+Module["getValue"] = getValue;
 unexportedRuntimeFunction('allocate', false);
 unexportedRuntimeFunction('UTF8ArrayToString', false);
 Module["UTF8ToString"] = UTF8ToString;
@@ -5438,7 +5447,7 @@ unexportedRuntimeFunction('addOnPreMain', false);
 unexportedRuntimeFunction('addOnExit', false);
 unexportedRuntimeFunction('addOnPostRun', false);
 unexportedRuntimeFunction('writeStringToMemory', false);
-unexportedRuntimeFunction('writeArrayToMemory', false);
+Module["writeArrayToMemory"] = writeArrayToMemory;
 unexportedRuntimeFunction('writeAsciiToMemory', false);
 unexportedRuntimeFunction('addRunDependency', true);
 unexportedRuntimeFunction('removeRunDependency', true);

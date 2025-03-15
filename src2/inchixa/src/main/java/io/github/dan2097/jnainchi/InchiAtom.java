@@ -18,9 +18,7 @@
 package io.github.dan2097.jnainchi;
 
 public class InchiAtom {
-	static int test = 0;
-
-	private int id;
+  
   private String elName;
   private double x = 0;
   private double y = 0;
@@ -34,11 +32,10 @@ public class InchiAtom {
   
   public InchiAtom(String elName) {
     this.elName = elName;
-    this.id = ++test;
   }
   
   public InchiAtom(String elName, double x, double y, double z) {
-	this(elName);
+    this.elName = elName;
     this.x = x;
     this.y = y;
     this.z = z;
@@ -157,9 +154,5 @@ public class InchiAtom {
       throw new IllegalArgumentException("Unacceptable charge:" + charge);
     }
     this.charge = charge;
-  }
-  
-  public String toString() {
-	  return elName + " " + id;
   }
 }

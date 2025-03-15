@@ -60,11 +60,16 @@ public class CDKSwingJSTest {
 
 		// ene inchi = "InChI=1S/C4H8/c1-3-4-2/h3-4H,1-2H3/b4-3+";
 		// morphine 
-		inchi = "InChI=1S/C17H19NO3/c1-18-7-6-17-10-3-5-13(20)16(17)21-15-12(19)4-2-9(14(15)17)8-11(10)18/h2-5,10-11,13,16,19-20H,6-8H2,1H3/t10-,11+,13-,16-,17-/m0/s1";
+		//inchi = "InChI=1S/C17H19NO3/c1-18-7-6-17-10-3-5-13(20)16(17)21-15-12(19)4-2-9(14(15)17)8-11(10)18/h2-5,10-11,13,16,19-20H,6-8H2,1H3/t10-,11+,13-,16-,17-/m0/s1";
 
 		// allene inchi = "InChI=1S/C6H10/c1-3-5-6-4-2/h3,6H,4H2,1-2H3/t5-/m0/s1";
 		// 2-propanol inchi = "InChI=1S/C4H10O/c1-3-4(2)5/h4-5H,3H2,1-2H3/t4-/m0/s1";
 		try {
+			
+			String ikey = InchiAPI.inchiToInchiKey(inchi).getInchiKey();
+			System.out.println(ikey);
+			System.out.println("MSKVTYYOOJREKU-STJZCQMKSA-N".equals(ikey));
+
 			getDataURIFromInChI(inchi);
 
 			
@@ -78,7 +83,6 @@ public class CDKSwingJSTest {
 			System.out.println(inchi);
 			System.out.println(inchi2);
 			
-			//inchi2 = "InChI=1S/C17H19NO3/c1-18-7-6-17-10-3-5-13(20)16(17)21-15-12(19)4-2-9(14(15)17)8-11(10)18/h2-5,10-11,13,16,19-20H,6-8H2,1H3/t10-,11+,13-,16-,17-/m0/s1";
 			System.out.println("inchi->mol->inchi " + inchi.equals(inchi2));
 
 			// mol to MOL file
@@ -93,10 +97,9 @@ public class CDKSwingJSTest {
 			System.out.println(smilesExpected);
 			System.out.println(smi);
 			System.out.println("inchi->mol->smiles " + smi.equals(smilesExpected));
-
 			
-			mol = new SmilesParser(getBuilder()).parseSmiles(smi);
 			// smiles to mol to inchi
+			mol = new SmilesParser(getBuilder()).parseSmiles(smi);
 			String inchi3 = InChIGeneratorFactory.getInstance().getInChIGenerator(mol).getInchi();
 			System.out.println(inchi3);
 			System.out.println("inchi->mol->smiles->mol->inchi " + inchi3.equals(inchi));
@@ -111,6 +114,8 @@ public class CDKSwingJSTest {
 			 * 
 			 * $("body").append("<img src='" + s + "'>");
 			 */
+			
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

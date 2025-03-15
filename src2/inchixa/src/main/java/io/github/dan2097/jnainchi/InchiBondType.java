@@ -35,36 +35,36 @@ public enum InchiBondType {
   /** avoid by all means */
   ALTERN(tagINCHIBondType.INCHI_BOND_TYPE_ALTERN);
   
-  private final int code;
+  private final byte code;
   
   private InchiBondType(int code) {
-    this.code = code;
+    this.code = (byte) code;
   }
 
   byte getCode() {
-    return (byte) code;
+    return code;
   }
   
   private static final Map<Object, InchiBondType> map = new HashMap<>();
   
   static {
     for (InchiBondType val : InchiBondType.values()) {
-      map.put(Integer.valueOf(val.code), val);
+      map.put(Byte.valueOf(val.code), val);
       map.put(val.name().toLowerCase(), val);
     }
   }
-  
-  public static InchiBondType of(int code) {
-    return map.get(Integer.valueOf(code));
+
+  public static int getCodeObj(Object val) {
+    if (val != null) {
+      InchiBondType e = (val instanceof InchiBondType ? (InchiBondType) val 
+          : map.get(val.toString().toLowerCase()));
+      if (e != null)
+        return e.getCode();
+    }
+    return SINGLE.getCode();
   }
 
-	public static int getCodeObj(Object val) {
-		if (val != null) {
-			InchiBondType e = (val instanceof InchiBondType ? (InchiBondType) val 
-					: map.get(val.toString().toLowerCase()));
-			if (e != null)
-				return e.getCode();
-		}
-		return SINGLE.getCode();
-	}
+  public static InchiBondType of(byte code) {
+    return map.get(code);
+  }
 }

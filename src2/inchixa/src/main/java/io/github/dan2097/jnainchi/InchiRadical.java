@@ -32,37 +32,37 @@ public enum InchiRadical {
   
   TRIPLET(tagINCHIRadical.INCHI_RADICAL_TRIPLET);
 
-  private final int code;
+  private final byte code;
   
   private InchiRadical(int code) {
-    this.code = code;
+    this.code = (byte) code;
   }
   
   byte getCode() {
-    return (byte) code;
+    return code;
   }
   
   private static final Map<Object, InchiRadical> map = new HashMap<>();
   
   static {
     for (InchiRadical val : InchiRadical.values()) {
-      map.put(Integer.valueOf(val.code), val);
+      map.put(Byte.valueOf(val.code), val);
       map.put(val.name().toLowerCase(), val);
     }
   }
-  
-  static InchiRadical of(int code) {
-    return map.get(Integer.valueOf(code));
-  }
 
-	public static int getCodeObj(Object val) {
-		if (val != null) {
-			InchiRadical e = (val instanceof InchiRadical ? (InchiRadical) val 
-					: map.get(val.toString().toLowerCase()));
-			if (e != null)
-				return e.getCode();
-		}
-		return NONE.getCode();
-	}
+  public static int getCodeObj(Object val) {
+    if (val != null) {
+      InchiRadical e = (val instanceof InchiRadical ? (InchiRadical) val 
+          : map.get(val.toString().toLowerCase()));
+      if (e != null)
+        return e.getCode();
+    }
+    return NONE.getCode();
+  }
+  
+  static InchiRadical of(byte code) {
+    return map.get(code);
+  }
 
 }

@@ -34,36 +34,36 @@ public enum InchiStereoParity {
   
   UNDEFINED(tagINCHIStereoParity0D.INCHI_PARITY_UNDEFINED);
   
-	  private final int code;
-	  
-	  private InchiStereoParity(int code) {
-	    this.code = code;
-	  }
-
-	  byte getCode() {
-	    return (byte) code;
-	  }
-	  
-	  private static final Map<Object, InchiStereoParity> map = new HashMap<>();
-	  
-	  static {
-	    for (InchiStereoParity val : InchiStereoParity.values()) {
-	      map.put(Integer.valueOf(val.code), val);
-	      map.put(val.name().toLowerCase(), val);
-	    }
-	  }
-	  
-	  static InchiStereoParity of(int code) {
-	    return map.get(Integer.valueOf(code));
-	  }
-
-		public static int getCodeObj(Object val) {
-			if (val != null) {
-				InchiStereoParity e = (val instanceof InchiStereoParity ? (InchiStereoParity) val 
-						: map.get(val.toString().toLowerCase()));
-				if (e != null)
-					return e.getCode();
-			}
-			return NONE.getCode();
-		}
-	}
+  private final byte code;
+  
+  private InchiStereoParity(int code) {
+    this.code = (byte) code;
+  }
+  
+  byte getCode() {
+    return code;
+  }
+  
+  private static final Map<Object, InchiStereoParity> map = new HashMap<>();
+  
+  static {
+    for (InchiStereoParity val : InchiStereoParity.values()) {
+      map.put(Byte.valueOf(val.code), val);
+      map.put(val.name().toLowerCase(), val);
+    }
+  }
+  
+  public static int getCodeObj(Object val) {
+    if (val != null) {
+      InchiStereoParity e = (val instanceof InchiStereoParity ? (InchiStereoParity) val 
+          : map.get(val.toString().toLowerCase()));
+      if (e != null)
+        return e.getCode();
+    }
+    return NONE.getCode();
+  }
+    
+  static InchiStereoParity of(byte code) {
+    return map.get(code);
+  }
+}

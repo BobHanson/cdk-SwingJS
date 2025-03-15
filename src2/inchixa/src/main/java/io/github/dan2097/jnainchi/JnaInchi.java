@@ -753,7 +753,6 @@ public class JnaInchi {
       for (int i = 0; i < 4; i++) {
         int idx = nativeStereo.neighbor[i];
         atoms[i] = idx >=0 ?  inchiInput.getAtom(idx) : null;
-        System.out.println(atoms[i]);
       }
 
       InchiAtom centralAtom = nativeStereo.central_atom >=0 ? inchiInput.getAtom(nativeStereo.central_atom) : null;

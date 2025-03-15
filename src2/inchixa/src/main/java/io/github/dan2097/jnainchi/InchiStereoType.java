@@ -32,36 +32,36 @@ public enum InchiStereoType {
   
   Allene(tagINCHIStereoType0D.INCHI_StereoType_Allene);
 
-  private final int code;
+  private final byte code;
   
   private InchiStereoType(int code) {
-    this.code = code;
+    this.code = (byte) code;
   }
 
   byte getCode() {
-    return (byte) code;
+    return code;
   }
   
   private static final Map<Object, InchiStereoType> map = new HashMap<>();
   
   static {
     for (InchiStereoType val : InchiStereoType.values()) {
-      map.put(Integer.valueOf(val.code), val);
+      map.put(Byte.valueOf(val.code), val);
       map.put(val.name().toLowerCase(), val);
     }
   }
   
-  static InchiStereoType of(int code) {
-    return map.get(Integer.valueOf(code));
+  public static int getCodeObj(Object val) {
+    if (val != null) {
+      InchiStereoType e = (val instanceof InchiStereoType ? (InchiStereoType) val 
+          : map.get(val.toString().toLowerCase()));
+      if (e != null)
+        return e.getCode();
+    }
+    return None.getCode();
   }
 
-	public static int getCodeObj(Object val) {
-		if (val != null) {
-			InchiStereoType e = (val instanceof InchiStereoType ? (InchiStereoType) val 
-					: map.get(val.toString().toLowerCase()));
-			if (e != null)
-				return e.getCode();
-		}
-		return None.getCode();
-	}
+  static InchiStereoType of(byte code) {
+    return map.get(code);
+  }
 }

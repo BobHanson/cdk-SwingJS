@@ -48,37 +48,37 @@ public enum InchiBondStereo {
   /** unknown stereobond geometry*/
   DOUBLE_EITHER(tagINCHIBondStereo2D.INCHI_BOND_STEREO_DOUBLE_EITHER);
   
-	  private final int code;
-	  
-	  private InchiBondStereo(int code) {
-	    this.code = code;
-	  }
-
-	  byte getCode() {
-	    return (byte) code;
-	  }
-	  
-	  private static final Map<Object, InchiBondStereo> map = new HashMap<>();
-	  
-	  static {
-	    for (InchiBondStereo val : InchiBondStereo.values()) {
-	      map.put(Integer.valueOf(val.code), val);
-	      map.put(val.name().toLowerCase(), val);
-	    }
-	  }
-	  
-	  static InchiBondStereo of(int code) {
-	    return map.get(Integer.valueOf(code));
-	  }
-
-		public static int getCodeObj(Object val) {
-			if (val != null) {
-				InchiBondStereo e = (val instanceof InchiBondStereo ? (InchiBondStereo) val 
-						: map.get(val.toString().toLowerCase()));
-				if (e != null)
-					return e.getCode();
-			}
-			return NONE.getCode();
-		}
+  private final byte code;
+  
+  private InchiBondStereo(int code) {
+    this.code = (byte) code;
+  }
+  
+  byte getCode() {
+    return code;
+  }
+  
+  private static final Map<Object, InchiBondStereo> map = new HashMap<>();
+  
+  static {
+    for (InchiBondStereo val : InchiBondStereo.values()) {
+      map.put(Byte.valueOf(val.code), val);
+      map.put(val.name().toLowerCase(), val);
+    }
+  }
+    
+  public static int getCodeObj(Object val) {
+    if (val != null) {
+      InchiBondStereo e = (val instanceof InchiBondStereo ? (InchiBondStereo) val 
+          : map.get(val.toString().toLowerCase()));
+      if (e != null)
+        return e.getCode();
+    }
+    return NONE.getCode();
+  }
+  
+  static InchiBondStereo of(byte code) {
+    return map.get(code);
+  }
 
 }
