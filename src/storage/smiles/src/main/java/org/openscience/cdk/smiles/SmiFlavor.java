@@ -1,0 +1,263 @@
+/*
+ * Copyright (c) 2016 John May <jwmay@users.sf.net>
+ *
+ * Contact: cdk-devel@lists.sourceforge.net
+ *
+ * This program is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation; either version 2.1 of the License, or (at
+ * your option) any later version. All we ask is that proper credit is given
+ * for our work, which includes - but is not limited to - adding the above
+ * copyright notice to the beginning of your source code files, and to any
+ * copyright notice that you may distribute with programs based on this work.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 U
+ */
+
+package org.openscience.cdk.smiles;
+
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IPseudoAtom;
+
+/**
+ * Flags for customising SMILES generation.
+ */
+public final class SmiFlavor {
+
+    private SmiFlavor() {
+    }
+
+    /**
+     * Output SMILES in a canonical order. The order is not guaranteed to be
+     * equivalent between releases.
+     */
+    public static final int Canonical          = 0x0000_0001;
+
+    /**
+     * Output SMILES in a canonical order using the InChI labelling algorithm.
+     * @see #UniversalSmiles
+     */
+    public static final int InChILabelling     = 0x0000_0003;
+
+    /**
+     * Output atom-atom mapping for reactions and atom classes for molecules. The
+     * map index is set on an atom with property {@link org.openscience.cdk.CDKConstants#ATOM_ATOM_MAPPING}
+     * using {@link org.openscience.cdk.interfaces.IAtom#setProperty(Object, Object)}.
+     */
+    public static final int AtomAtomMap        = 0x0000_0004;
+
+    /**
+     * Output atomic mass on atoms. For historical reasons the atomic mass is
+     * often set on all atoms in a CDK molecule. Therefore to avoid SMILES like
+     * {@code [12CH3][12CH2][16OH]} major isotopes are not generated. If you
+     * wish to generate SMILES with the major isotopes please use the flag
+     * {@link #AtomicMassStrict} this will output all mass numbers and only be
+     * omitted when the mass is unset (null).
+     */
+    public static final int AtomicMass         = 0x0000_0008;
+
+    /**
+     * Writes aromatic atoms as lower case letters. For portability
+     * this option is not recommended.
+     */
+    public static final int UseAromaticSymbols = 0x0000_0010;
+
+    // public static final int SuppressHydrogens  = 0x0000_0020;
+
+    /**
+     * Output tetrahedral stereochemistry on atoms as <code>@</code> and <code>@@</code>.
+     * @see #Stereo
+     */
+    public static final int StereoTetrahedral   = 0x0000_0100;
+
+    /**
+     * Output cis-trans stereochemistry specified by directional <code>\</code>
+     * of <code>/</code> bonds.
+     * @see #Stereo
+     */
+    public static final int StereoCisTrans      = 0x0000_0200;
+
+    /**
+     * Output extended tetrahedral stereochemistry on atoms as <code>@</code> and
+     * <code>@@</code>. Extended tetrahedral captures rotations around a cumulated
+     * carbon: <code>CC=[C@]=CC</code>.
+     * @see #Stereo
+     */
+    public static final int StereoExTetrahedral = 0x0000_0400;
+
+    public static final int StereoExCisTrans    = 0x0000_0500;
+
+    public static final int StereoSquarePlanar = 0x0100_0000;
+
+    public static final int StereoTrigonalBipyramidal = 0x0400_0000;
+
+    public static final int StereoOctahedral = 0x0800_0000;
+
+    /**
+     * Generate SMILES with the major isotopes, only omit mass numbers when it
+     * is unset.
+     * @deprecated no longer needed, default CDK behaviour is now to pass
+     *             through mass numbers if non-null
+     */
+    @Deprecated
+    public static final int AtomicMassStrict   = 0x0000_0800;
+
+    /**
+     * Output supported stereochemistry types.
+     * @see #StereoTetrahedral
+     * @see #StereoCisTrans
+     * @see #StereoExTetrahedral
+     */
+    public static final int Stereo              = StereoTetrahedral |
+                                                  StereoCisTrans |
+                                                  StereoExTetrahedral |
+                                                  StereoExCisTrans |
+                                                  StereoSquarePlanar |
+                                                  StereoTrigonalBipyramidal |
+                                                  StereoOctahedral;
+
+    /**
+     * Output 2D coordinates.
+     */
+    public static final int Cx2dCoordinates     = 0x0000_1000;
+
+    /**
+     * Output 3D coordinates.
+     */
+    public static final int Cx3dCoordinates     = 0x0000_2000;
+
+    /**
+     * Output either 2D/3D coordinates.
+     */
+    public static final int CxCoordinates       = Cx3dCoordinates | Cx2dCoordinates;
+
+    /**
+     * Output atom labels, atom labels are specified by {@link IPseudoAtom#getLabel()}.
+     */
+    public static final int CxAtomLabel         = 0x0000_8000;
+
+    /**
+     * Output atom values, atom values are specified by the property 
+     * {@link org.openscience.cdk.CDKConstants#COMMENT} using 
+     * {@link org.openscience.cdk.interfaces.IAtom#setProperty(Object, Object)}
+     */
+    public static final int CxAtomValue         = 0x0001_0000;
+
+    /**
+     * Output radicals, radicals are specified by {@link IAtomContainer#getConnectedSingleElectronsCount(IAtom)}
+     */
+    public static final int CxRadical           = 0x0002_0000;
+
+    /**
+     * Output multicenter bonds, positional variation is specified with {@link org.openscience.cdk.sgroup.Sgroup}s
+     * of the type {@link org.openscience.cdk.sgroup.SgroupType#ExtMulticenter}.
+     */
+    public static final int CxMulticenter       = 0x0004_0000;
+
+    /**
+     * Output polymer repeat units is specified with {@link org.openscience.cdk.sgroup.Sgroup}s.
+     */
+    public static final int CxPolymer           = 0x0008_0000;
+
+    /**
+     * Output fragment grouping for reactions.
+     */
+    public static final int CxFragmentGroup     = 0x0010_0000;
+
+    /**
+     * Output ligand order information.
+     */
+    public static final int CxLigandOrder       = 0x0020_0000;
+
+    /**
+     * Renumber AtomAtomMaps during canonical generation
+     */
+    public static final int AtomAtomMapRenumber = Canonical | AtomAtomMap | 0x0200_0000;
+
+    /**
+     * Output data Sgroups.
+     */
+    public static final int CxDataSgroups       = 0x0040_0000;
+
+    /**
+     * Output enhanced stereo.
+     */
+    public static final int CxEnhancedStereo    = 0x0080_0000 | StereoTetrahedral;
+
+    /* Max: StereoOctahedral = 0x0800_0000 */
+
+    /**
+     * Output CXSMILES layers.
+     */
+    public static final int CxSmiles            = CxAtomLabel | CxAtomValue | CxRadical | CxFragmentGroup | CxMulticenter | CxPolymer | CxLigandOrder | CxEnhancedStereo;
+
+    /**
+     * Output CXSMILES layers and coordinates.
+     */
+    public static final int CxSmilesWithCoords  = CxSmiles | CxCoordinates;
+
+    /**
+     * Output non-canonical SMILES without stereochemistry, atomic masses.
+     */
+    public static final int Generic             = 0;
+
+    /**
+     * Output canonical SMILES without stereochemistry, atomic masses.
+     */
+    public static final int Unique              = Canonical;
+
+    /**
+     * Output non-canonical SMILES with stereochemistry, atomic masses.
+     */
+    public static final int Isomeric            = Stereo | AtomicMass;
+
+    /**
+     * Output canonical SMILES with stereochemistry, atomic masses.
+     */
+    public static final int Absolute            = Canonical | Isomeric;
+
+
+    /**
+     * Default SMILES output write Stereochemistry, Atomic Mass, and CXSMILES layers. The
+     * ordering is not canonical.
+     */
+    public static final int Default             = Stereo | AtomicMass | CxSmiles;
+
+    /**
+     * Output canonical SMILES with stereochemistry and atomic masses, This output uses the
+     * InChI labelling algorithm to generate a 'Universal SMILES' {@cdk.cite OBoyle12}.
+     * <br>
+     * Unfortunately there are several issues and general use is not recommended:
+     * <ul>
+     *  <li>MAJOR: Molecules with delocalised charges are generally non-canonical, e.g.
+     *             <code>C(\C=C\N1CCCC1)=C/c2[n+](c3c(n2CC)nc4ccccc4n3)CC</code> will generate two different
+     *             SMILES depending on input order</li>
+     *  <li>MINOR: Double bond '/' '\' assignment is different from the original paper (O'Boyle) and
+     *             will not match universal SMILES generated by Open Babel</li>
+     *  <li>MINOR: SMILES with '*' atoms can not be canonicalised by default, to avoid this we use
+     *             the 'Rf' atom as a substitute. Structures with an 'Rf' atom can still be generated
+     *             providing there are no '*' atoms.</li>
+     *  <li>MINOR: The InChI library (v1.03) is not thread safe</li>
+     * </ul>
+     *
+     */
+    public static final int UniversalSmiles     = InChILabelling | Isomeric;
+
+    // test if a single bit flag is set
+    static boolean isSet(int opts, int opt) {
+        return (opts & opt) != 0;
+    }
+
+    // test if the flag is fully set with all bits
+    static boolean isFullySet(int opts, int opt) {
+        return (opts & opt) == opt;
+    }
+}

@@ -1,5 +1,0 @@
-RInChI=
-RAuxInfo=
-Long-RInChIKey=
-Short-RInChIKey=
-Web-RInChIKey=

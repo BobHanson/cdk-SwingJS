@@ -200,6 +200,12 @@ Module['ready'] = new Promise(function(resolve, reject) {
       }
     
 
+      if (!Object.getOwnPropertyDescriptor(Module['ready'], '_IXA_INCHIBUILDER_GetInChIVersion')) {
+        Object.defineProperty(Module['ready'], '_IXA_INCHIBUILDER_GetInChIVersion', { configurable: true, get: function() { abort('You are getting _IXA_INCHIBUILDER_GetInChIVersion on the Promise object, instead of the instance. Use .then() to get called back with the instance, see the MODULARIZE docs in src/settings.js') } });
+        Object.defineProperty(Module['ready'], '_IXA_INCHIBUILDER_GetInChIVersion', { configurable: true, set: function() { abort('You are setting _IXA_INCHIBUILDER_GetInChIVersion on the Promise object, instead of the instance. Use .then() to get called back with the instance, see the MODULARIZE docs in src/settings.js') } });
+      }
+    
+
       if (!Object.getOwnPropertyDescriptor(Module['ready'], '_IXA_INCHIBUILDER_CheckOption')) {
         Object.defineProperty(Module['ready'], '_IXA_INCHIBUILDER_CheckOption', { configurable: true, get: function() { abort('You are getting _IXA_INCHIBUILDER_CheckOption on the Promise object, instead of the instance. Use .then() to get called back with the instance, see the MODULARIZE docs in src/settings.js') } });
         Object.defineProperty(Module['ready'], '_IXA_INCHIBUILDER_CheckOption', { configurable: true, set: function() { abort('You are setting _IXA_INCHIBUILDER_CheckOption on the Promise object, instead of the instance. Use .then() to get called back with the instance, see the MODULARIZE docs in src/settings.js') } });
@@ -5212,6 +5218,9 @@ var _IXA_INCHIBUILDER_CheckOption = Module["_IXA_INCHIBUILDER_CheckOption"] = cr
 
 /** @type {function(...*):?} */
 var _IXA_INCHIBUILDER_CheckOption_Stereo = Module["_IXA_INCHIBUILDER_CheckOption_Stereo"] = createExportWrapper("IXA_INCHIBUILDER_CheckOption_Stereo");
+
+/** @type {function(...*):?} */
+var _IXA_INCHIBUILDER_GetInChIVersion = Module["_IXA_INCHIBUILDER_GetInChIVersion"] = createExportWrapper("IXA_INCHIBUILDER_GetInChIVersion");
 
 /** @type {function(...*):?} */
 var _IXA_INCHIBUILDER_GetInChI = Module["_IXA_INCHIBUILDER_GetInChI"] = createExportWrapper("IXA_INCHIBUILDER_GetInChI");

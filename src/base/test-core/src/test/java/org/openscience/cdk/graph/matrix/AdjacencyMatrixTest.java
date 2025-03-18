@@ -1,0 +1,52 @@
+/* Copyright (C) 2007  Egon Willighagen <egonw@users.sf.net>
+ *
+ * Contact: cdk-devel@lists.sourceforge.net
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public License
+ * as published by the Free Software Foundation; either version 2.1
+ * of the License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
+ */
+package org.openscience.cdk.graph.matrix;
+
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
+import org.openscience.cdk.test.CDKTestCase;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.silent.SilentChemObjectBuilder;
+import org.openscience.cdk.smiles.SmilesParser;
+
+/**
+ * @cdk.module test-core
+ */
+class AdjacencyMatrixTest extends CDKTestCase {
+
+    private static SmilesParser sp;
+
+    @BeforeAll
+    static void getSmilesParser() {
+        sp = new SmilesParser(SilentChemObjectBuilder.getInstance());
+    }
+
+    @Test
+    void testGetMatrix_IAtomContainer() throws Exception {
+        IAtomContainer container = sp.parseSmiles("C1CC1");
+        int[][] matrix = AdjacencyMatrix.getMatrix(container);
+        Assertions.assertEquals(3, matrix.length);
+        Assertions.assertEquals(3, matrix[0].length);
+        Assertions.assertEquals(0, matrix[0][0]);
+        Assertions.assertEquals(1, matrix[0][2]);
+        Assertions.assertEquals(1, matrix[0][1]);
+    }
+
+}

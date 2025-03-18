@@ -5,13 +5,16 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.FileOutputStream;
 import java.util.Base64;
+import java.util.Locale;
 
 import javax.imageio.ImageIO;
 
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.depict.Depiction;
 import org.openscience.cdk.depict.DepictionGenerator;
+import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.inchi.InChIGeneratorFactory;
+import org.openscience.cdk.inchi.InChIToStructure;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.io.MDLV2000Writer;
@@ -24,6 +27,8 @@ import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 import io.github.dan2097.jnainchi.InchiAPI;
+import io.github.dan2097.jnainchi.InchiInput;
+import io.github.dan2097.jnainchi.InchiInputFromInchiOutput;
 import io.github.dan2097.jnainchi.inchi.InchiLibrary;
 import swingjs.SwingJSLogger;
 
@@ -32,6 +37,10 @@ public class CDKSwingJSTest {
 			false;
 
 	public static void main(String[] args) {
+		
+		Locale.setDefault(Locale.ROOT);
+		
+		
 		try {
 			if (isJS) {
 				LoggingToolFactory.setLoggingToolClass(SwingJSLogger.class);
@@ -55,6 +64,26 @@ public class CDKSwingJSTest {
 		// N variant
 		long t0 = System.currentTimeMillis();
 
+		String auxinfo = "AuxInfo=1/0/N:1,3,5,2,6,4/E:(1,2,3,4,5,6)/rA:6nCCCCCC/rB:;d1s2;d2;s1;s4d5;/rC:7.8848,-4.7251,0;9.6152,-4.7246,0;8.7516,-4.225,0;9.6152,-5.7255,0;7.8848,-5.73,0;8.7538,-6.225,0;";
+
+		String molFile = "https://cactus.nci.nih.gov/chemical/structure/C/file?format=sdf&get3d=true\n" + 
+				"__Jmol-16.07212415433D 1   1.00000     0.00000     0\n" + 
+				"Jmol version 16.2.20  2023-01-10 13:20 EXTRACT: ({0:4})\n" + 
+				"  5  4  0  0  0  0            999 V2000\n" + 
+				"    0.0000   -0.0000    0.0000 C   0  0  0  0  0  0\n" + 
+				"    0.0000   -0.8900   -0.6293 H   0  0  0  0  0  0\n" + 
+				"    0.0000    0.8900   -0.6293 H   0  0  0  0  0  0\n" + 
+				"   -0.8900   -0.0000    0.6293 H   0  0  0  0  0  0\n" + 
+				"    0.8900   -0.0000    0.6293 H   0  0  0  0  0  0\n" + 
+				"  1  2  1\n" + 
+				"  1  3  1\n" + 
+				"  1  4  1\n" + 
+				"  1  5  1\n" + 
+				"M  END\n" + 
+				"";
+		
+		molFile = propanamide_mol;
+
 		String inchi = "InChI=1S/C41H45NO21/c43-13-27-32(51)34(53)37(56)40(61-27)59-25-11-19(45)10-21-20(25)12-26(30(42-21)17-4-7-22(46)23(47)9-17)60-41-38(63-39-36(55)31(50)24(48)14-58-39)35(54)33(52)28(62-41)15-57-29(49)8-3-16-1-5-18(44)6-2-16/h1-12,24,27-28,31-41,43-48,50-56H,13-15H2"
 				+ "/b8-3+/t24-,27-,28-,31+,32-,33-,34+,35+,36-,37-,38-,39+,40-,41-/m1/s1";
 
@@ -65,19 +94,47 @@ public class CDKSwingJSTest {
 		// allene inchi = "InChI=1S/C6H10/c1-3-5-6-4-2/h3,6H,4H2,1-2H3/t5-/m0/s1";
 		// 2-propanol inchi = "InChI=1S/C4H10O/c1-3-4(2)5/h4-5H,3H2,1-2H3/t4-/m0/s1";
 		try {
+
 			
+			// amide test
+			getImagesForInChI("InChI=1S/C3H7NO/c1-2-3(4)5/h2H2,1H3,(H2,4,5)");
+			
+			if (true) return;
+
+//			String abc ="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+//			checkABC(abc, "lt");
+//			checkABC(abc, "tr");
+//			checkABC(abc, "az");
+//
+			StructureDiagramGenerator sdg;
+			IAtomContainer mol;
+		
+			// molfile -> image, amide fix
+			
+			InchiInput input = InchiAPI.getInchiInputFromMolFile(molFile, "fixamide");
+			mol = new InChIToStructure(input, DefaultChemObjectBuilder.getInstance()) {
+			}.getAtomContainer();
+			System.out.println(mol.getAtomCount());
+//			mol = AtomContainerManipulator.suppressHydrogens(mol);
+		    getDataURIFromCDKMolecule(mol);
+		    getImagesForCDKMolecule(mol);
+
+		    
 			String ikey = InchiAPI.inchiToInchiKey(inchi).getInchiKey();
 			System.out.println(ikey);
 			System.out.println("MSKVTYYOOJREKU-STJZCQMKSA-N".equals(ikey));
 
-			getDataURIFromInChI(inchi);
+			getDataURIForCDKMolecule(mol);
 
 			
+		    
+		    // inchi->mol
 			
 			
-			IAtomContainer mol = InChIGeneratorFactory.getInstance().getInChIToStructure(inchi, getBuilder(), "").getAtomContainer();
+			
+			mol = new InChIToStructure(inchi, getBuilder(), "fixamides") {}.getAtomContainer();
 			mol = AtomContainerManipulator.suppressHydrogens(mol);
-			StructureDiagramGenerator sdg = new StructureDiagramGenerator();
+			sdg = new StructureDiagramGenerator();
 			sdg.generateCoordinates(mol);
 			String inchi2 = InChIGeneratorFactory.getInstance().getInChIGenerator(mol).getInchi();
 			System.out.println(inchi);
@@ -107,15 +164,7 @@ public class CDKSwingJSTest {
 			getImagesForInChI(inchi2);
 
 			// to image 
-			@SuppressWarnings("unused")
-			String s = getDataURIFromInChI(inchi2);
-			/**
-			 * @j2sNative 
-			 * 
-			 * $("body").append("<img src='" + s + "'>");
-			 */
-			
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -123,41 +172,77 @@ public class CDKSwingJSTest {
 		System.out.println((System.currentTimeMillis() - t0) + " ms");
 	}
 
+	private static void checkABC(String abc, String la) {
+		String abclc = abc.toLowerCase(Locale.ROOT);
+		String abcuc = abc.toUpperCase(Locale.ROOT);
+		String abclalc = abc.toLowerCase(Locale.forLanguageTag(la));
+		String abclauc = abc.toUpperCase(Locale.forLanguageTag(la));
+		for (int i = 0;i < abc.length(); i++) {
+			if (abclc.codePointAt(i) != abclalc.codePointAt(i))
+				System.out.println(la + " " + i + " " + abc.charAt(i) + " " + abclalc.charAt(i));
+			if (abcuc.codePointAt(i) != abclauc.codePointAt(i))
+				System.out.println(la + " " + i + " " + abc.charAt(i) + " " + abclauc.charAt(i));
+		}
+		
+	}
+
 	public static String getImagesForInChI(String inchi) {
 		// inchi = "InChI=1S/C2H6O/c1-3-2/h1-2H3";
 		// inchi = "InChI=1S/H2O/h1H2";
 		try {
-			IAtomContainer mol = AtomContainerManipulator.suppressHydrogens(InChIGeneratorFactory.getInstance()
-					.getInChIToStructure(inchi, getBuilder(), "").getAtomContainer());
-			StructureDiagramGenerator sdg = new StructureDiagramGenerator();
-			sdg.generateCoordinates(AtomContainerManipulator.suppressHydrogens(mol));
-
-			Font f = new Font("SansSerif", Font.BOLD, 20);
-			DepictionGenerator dg = new DepictionGenerator(f).withSize(600, 600);
-			BufferedImage image = dg.depict(mol).toImg();
-
-			// ByteArrayOutputStream bos = new ByteArrayOutputStream();
-			FileOutputStream bos = new FileOutputStream("c:/temp/testcdk.png");
-			ImageIO.write(image, "PNG", bos);
-			bos.close();
-			System.out.println("textcdk.png created");
-			bos = new FileOutputStream("c:/temp/testcdk.svg");
-			String svg = dg.depict(mol).toSvgStr(Depiction.UNITS_PX);
-			bos.write(svg.getBytes());
-			bos.close();
-			System.out.println("textcdk.svg created");
-//            bos = new FileOutputStream("c:/temp/testcdk.pdf");
-//            dg.depict(mol).writeTo(Depiction.PDF_FMT, bos);
-//            bos.close();
-//            System.out.println("textcdk.pdf created");
-
-//            String s = new BASE64Encoder().encode(bos.toByteArray());
-			return "";// "data:image/png;base64," + s;
+			IAtomContainer mol = getMolFixed(inchi, true, true);
+			String s = getImagesForCDKMolecule(mol);
+			getDataURIForCDKMolecule(mol);
+			return s;
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return null;
 
+	}
+
+	private static IAtomContainer getMolFixed(String inchi, boolean fixAmides, boolean suppressHydrogens) throws CDKException {
+		InchiInput input = InchiAPI.getInchiInputFromInchi(inchi, fixAmides ? "fixamides" : "").getInchiInput();
+		IAtomContainer mol = new InChIToStructure(input, DefaultChemObjectBuilder.getInstance()) {
+		}.getAtomContainer();
+		if (suppressHydrogens)
+			mol = AtomContainerManipulator.suppressHydrogens(mol);
+		return mol;
+	}
+
+	private static String getImagesForCDKMolecule(IAtomContainer mol) throws Exception {
+		StructureDiagramGenerator sdg = new StructureDiagramGenerator();
+		sdg.generateCoordinates(AtomContainerManipulator.suppressHydrogens(mol));
+
+		Font f = new Font("SansSerif", Font.BOLD, 20);
+		DepictionGenerator dg = new DepictionGenerator(f).withSize(600, 600);
+		BufferedImage image = dg.depict(mol).toImg();
+
+		// ByteArrayOutputStream bos = new ByteArrayOutputStream();
+		FileOutputStream bos = new FileOutputStream("c:/temp/testcdk.png");
+		ImageIO.write(image, "PNG", bos);
+		bos.close();
+		System.out.println("textcdk.png created");
+		bos = new FileOutputStream("c:/temp/testcdk.svg");
+		String svg = dg.depict(mol).toSvgStr(Depiction.UNITS_PX);
+		bos.write(svg.getBytes());
+		bos.close();
+		System.out.println("textcdk.svg created");
+//        bos = new FileOutputStream("c:/temp/testcdk.pdf");
+//        dg.depict(mol).writeTo(Depiction.PDF_FMT, bos);
+//        bos.close();
+//        System.out.println("textcdk.pdf created");
+
+//        String s = new BASE64Encoder().encode(bos.toByteArray());
+		return "";// "data:image/png;base64," + s;
+	}
+
+	public static String getDataURIForCDKMolecule(IAtomContainer mol) {
+		return getDataURIFromMolOrInChI(mol, null);
+	}
+
+	public static String getDataURIForInChI(String inchi) {		
+		return getDataURIFromMolOrInChI(null, inchi);
 	}
 
 	/**
@@ -166,12 +251,55 @@ public class CDKSwingJSTest {
 	 * @param inchi
 	 * @return
 	 */
-	public static String getDataURIFromInChI(String inchi) {
+	public static String getDataURIFromMolOrInChI(IAtomContainer mol, String inchi) {
+		try {
+			if (mol == null)
+				mol = getMolFixed(inchi, true, true);
+			String s = getDataURIFromCDKMolecule(mol);
+			/**
+			 * @j2sNative 
+			 * 
+			 * $("body").append("<img src='" + s + "'>");
+			 */
+			return s;
+		} catch (Throwable e) {
+			return null;
+		}
+	} 
+	
+    final static String propanamide_mol = "C3H7NO\n" + 
+    		"APtclcactv03172517403D 0   0.00000     0.00000\n" + 
+    		" \n" + 
+    		" 12 11  0  0  0  0  0  0  0  0999 V2000\n" + 
+    		"    0.5021    0.0389   -0.0019 C   0  0  0  0  0  0  0  0  0  0  0  0\n" + 
+    		"   -0.7264   -0.8339   -0.0014 C   0  0  0  0  0  0  0  0  0  0  0  0\n" + 
+    		"   -1.9776    0.0468    0.0014 C   0  0  0  0  0  0  0  0  0  0  0  0\n" + 
+    		"    0.3882    1.2463   -0.0002 O   0  0  0  0  0  0  0  0  0  0  0  0\n" + 
+    		"    1.7275   -0.5224    0.0013 N   0  0  0  0  0  0  0  0  0  0  0  0\n" + 
+    		"   -0.7263   -1.4620   -0.8922 H   0  0  0  0  0  0  0  0  0  0  0  0\n" + 
+    		"   -0.7239   -1.4644    0.8877 H   0  0  0  0  0  0  0  0  0  0  0  0\n" + 
+    		"   -1.9778    0.6749    0.8923 H   0  0  0  0  0  0  0  0  0  0  0  0\n" + 
+    		"   -1.9802    0.6772   -0.8877 H   0  0  0  0  0  0  0  0  0  0  0  0\n" + 
+    		"   -2.8662   -0.5845    0.0018 H   0  0  0  0  0  0  0  0  0  0  0  0\n" + 
+    		"    1.8186   -1.4881    0.0039 H   0  0  0  0  0  0  0  0  0  0  0  0\n" + 
+    		"    2.5182    0.0394    0.0010 H   0  0  0  0  0  0  0  0  0  0  0  0\n" + 
+    		"  1  2  1  0  0  0  0\n" + 
+    		"  2  3  1  0  0  0  0\n" + 
+    		"  1  4  2  0  0  0  0\n" + 
+    		"  1  5  1  0  0  0  0\n" + 
+    		"  2  6  1  0  0  0  0\n" + 
+    		"  2  7  1  0  0  0  0\n" + 
+    		"  3  8  1  0  0  0  0\n" + 
+    		"  3  9  1  0  0  0  0\n" + 
+    		"  3 10  1  0  0  0  0\n" + 
+    		"  5 11  1  0  0  0  0\n" + 
+    		"  5 12  1  0  0  0  0\n" + 
+    		"M  END\n" + 
+    		"$$$$\n" + 
+    		"";
+
+	private static String getDataURIFromCDKMolecule(IAtomContainer mol) {
 		try (ByteArrayOutputStream os = new ByteArrayOutputStream()) {
-	    	IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
-			IAtomContainer mol = InChIGeneratorFactory.getInstance()
-					.getInChIToStructure(inchi, builder, "")
-					.getAtomContainer();
 			mol = AtomContainerManipulator.suppressHydrogens(mol);
 			new StructureDiagramGenerator().generateCoordinates(mol);
 			DepictionGenerator dg = new DepictionGenerator();
@@ -182,9 +310,7 @@ public class CDKSwingJSTest {
 		} catch (Throwable e) {
 			return null;
 		}
-	} 
-	
-
+	}
 
 	/**
 	 * @j2sAlias get2DMolFromInChI
