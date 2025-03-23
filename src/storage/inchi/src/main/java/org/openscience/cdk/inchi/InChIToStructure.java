@@ -30,6 +30,7 @@ import io.github.dan2097.jnainchi.InchiStatus;
 import io.github.dan2097.jnainchi.InchiStereo;
 import io.github.dan2097.jnainchi.InchiStereoParity;
 import io.github.dan2097.jnainchi.InchiStereoType;
+import io.github.dan2097.jnainchi.JnaInchi;
 import io.github.dan2097.jnainchi.InchiAPI;
 import net.sf.jniinchi.INCHI_RET;
 import org.openscience.cdk.config.Elements;
@@ -91,6 +92,17 @@ import javax.vecmath.Point3d;
  */
 public class InChIToStructure {
 
+	private static boolean useInchiAPI = true;
+
+	static {
+		/**
+		 * In JavaScript, we MUST use InchiAPI, because
+		 * we have no synthetic access to C structures.
+		 * 
+		 * @j2sNative C$.useInchiAPI = true;
+		 */
+	}
+
     protected InchiInputFromInchiOutput output;
 
     protected InchiOptions options;
@@ -138,12 +150,12 @@ public class InChIToStructure {
             throw new IllegalArgumentException("Null InChI string provided");
         if (options == null)
             throw new IllegalArgumentException("Null options provided");
-        this.output = InchiAPI.getInchiInputFromInchi(inchi);
+        this.output = getInchiInputFromInchiOutputFromInchi(inchi);
         this.options = options;
         generateAtomContainerFromInchi(builder);
     }
 
-    /**
+	/**
      * Constructor. Generates CDK AtomContainer from InChI.
      * @param inchi
      * @throws CDKException
@@ -552,5 +564,13 @@ public class InChIToStructure {
     public long[][] getWarningFlags() {
         return output.getWarningFlags();
     }
+
+    private InchiInputFromInchiOutput getInchiInputFromInchiOutputFromInchi(String inchi) {
+    	if (useInchiAPI) {
+        	return InchiAPI.getInchiInputFromInchi(inchi);
+    	} else {
+        	return JnaInchi.getInchiInputFromInchi(inchi);    		
+    	}
+	}
 
 }

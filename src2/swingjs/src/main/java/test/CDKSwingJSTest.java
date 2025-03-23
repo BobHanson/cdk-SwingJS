@@ -3,7 +3,9 @@ package test;
 import java.awt.Font;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.OutputStream;
 import java.util.Base64;
 import java.util.Locale;
 
@@ -20,6 +22,7 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.io.MDLV2000Writer;
 import org.openscience.cdk.layout.StructureDiagramGenerator;
 import org.openscience.cdk.renderer.generators.standard.TextOutline;
+import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.SmiFlavor;
 import org.openscience.cdk.smiles.SmilesGenerator;
 import org.openscience.cdk.smiles.SmilesParser;
@@ -28,11 +31,12 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 import io.github.dan2097.jnainchi.InchiAPI;
 import io.github.dan2097.jnainchi.InchiInput;
-import io.github.dan2097.jnainchi.InchiInputFromInchiOutput;
 import io.github.dan2097.jnainchi.inchi.InchiLibrary;
 import swingjs.SwingJSLogger;
 
 public class CDKSwingJSTest {
+	private static final boolean writeFiles = false;
+	
 	private static boolean isJS = /** @j2sNative true || */
 			false;
 
@@ -87,6 +91,9 @@ public class CDKSwingJSTest {
 		String inchi = "InChI=1S/C41H45NO21/c43-13-27-32(51)34(53)37(56)40(61-27)59-25-11-19(45)10-21-20(25)12-26(30(42-21)17-4-7-22(46)23(47)9-17)60-41-38(63-39-36(55)31(50)24(48)14-58-39)35(54)33(52)28(62-41)15-57-29(49)8-3-16-1-5-18(44)6-2-16/h1-12,24,27-28,31-41,43-48,50-56H,13-15H2"
 				+ "/b8-3+/t24-,27-,28-,31+,32-,33-,34+,35+,36-,37-,38-,39+,40-,41-/m1/s1";
 
+		String smiles = "O=C1-NC=C1";
+		
+		
 		// ene inchi = "InChI=1S/C4H8/c1-3-4-2/h3-4H,1-2H3/b4-3+";
 		// morphine 
 		//inchi = "InChI=1S/C17H19NO3/c1-18-7-6-17-10-3-5-13(20)16(17)21-15-12(19)4-2-9(14(15)17)8-11(10)18/h2-5,10-11,13,16,19-20H,6-8H2,1H3/t10-,11+,13-,16-,17-/m0/s1";
@@ -98,8 +105,8 @@ public class CDKSwingJSTest {
 			
 			// amide test
 			getImagesForInChI("InChI=1S/C3H7NO/c1-2-3(4)5/h2H2,1H3,(H2,4,5)");
-			
-			if (true) return;
+
+			getImagesForSMILES(smiles);
 
 //			String abc ="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
 //			checkABC(abc, "lt");
@@ -132,7 +139,7 @@ public class CDKSwingJSTest {
 			
 			
 			
-			mol = new InChIToStructure(inchi, getBuilder(), "fixamides") {}.getAtomContainer();
+			mol = new InChIToStructure(inchi, getBuilder(), "fixamide") {}.getAtomContainer();
 			mol = AtomContainerManipulator.suppressHydrogens(mol);
 			sdg = new StructureDiagramGenerator();
 			sdg.generateCoordinates(mol);
@@ -201,8 +208,22 @@ public class CDKSwingJSTest {
 
 	}
 
+	public static String getImagesForSMILES(String smiles) {
+		try {
+	        SmilesParser sp = new SmilesParser(SilentChemObjectBuilder.getInstance());
+	        IAtomContainer mol = sp.parseSmiles(smiles);
+			String s = getImagesForCDKMolecule(mol);
+			getDataURIForCDKMolecule(mol);
+			return s;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+
+	}
+
 	private static IAtomContainer getMolFixed(String inchi, boolean fixAmides, boolean suppressHydrogens) throws CDKException {
-		InchiInput input = InchiAPI.getInchiInputFromInchi(inchi, fixAmides ? "fixamides" : "").getInchiInput();
+		InchiInput input = InchiAPI.getInchiInputFromInChI(inchi, fixAmides ? "fixamide" : "");
 		IAtomContainer mol = new InChIToStructure(input, DefaultChemObjectBuilder.getInstance()) {
 		}.getAtomContainer();
 		if (suppressHydrogens)
@@ -219,15 +240,13 @@ public class CDKSwingJSTest {
 		BufferedImage image = dg.depict(mol).toImg();
 
 		// ByteArrayOutputStream bos = new ByteArrayOutputStream();
-		FileOutputStream bos = new FileOutputStream("c:/temp/testcdk.png");
+		OutputStream bos = getOutputStream("c:/temp/testcdk.png");
 		ImageIO.write(image, "PNG", bos);
 		bos.close();
-		System.out.println("textcdk.png created");
-		bos = new FileOutputStream("c:/temp/testcdk.svg");
+		bos = getOutputStream("c:/temp/testcdk.svg");
 		String svg = dg.depict(mol).toSvgStr(Depiction.UNITS_PX);
 		bos.write(svg.getBytes());
 		bos.close();
-		System.out.println("textcdk.svg created");
 //        bos = new FileOutputStream("c:/temp/testcdk.pdf");
 //        dg.depict(mol).writeTo(Depiction.PDF_FMT, bos);
 //        bos.close();
@@ -235,6 +254,12 @@ public class CDKSwingJSTest {
 
 //        String s = new BASE64Encoder().encode(bos.toByteArray());
 		return "";// "data:image/png;base64," + s;
+	}
+
+	private static OutputStream getOutputStream(String path) throws FileNotFoundException {
+		if (writeFiles)
+			System.out.println(path + " created");
+		return (writeFiles ? new FileOutputStream(path) : new ByteArrayOutputStream());
 	}
 
 	public static String getDataURIForCDKMolecule(IAtomContainer mol) {
@@ -256,6 +281,8 @@ public class CDKSwingJSTest {
 			if (mol == null)
 				mol = getMolFixed(inchi, true, true);
 			String s = getDataURIFromCDKMolecule(mol);
+			if (!writeFiles)
+				return s;
 			/**
 			 * @j2sNative 
 			 * 

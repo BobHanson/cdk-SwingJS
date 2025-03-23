@@ -34,6 +34,7 @@ import io.github.dan2097.jnainchi.InchiOutput;
 import io.github.dan2097.jnainchi.InchiRadical;
 import io.github.dan2097.jnainchi.InchiStereo;
 import io.github.dan2097.jnainchi.InchiStereoParity;
+import io.github.dan2097.jnainchi.JnaInchi;
 import io.github.dan2097.jnainchi.InchiAPI;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.CDKException;
@@ -98,6 +99,16 @@ import java.util.Map;
  */
 public class InChIGenerator {
 
+	private static final boolean useInchiAPI = true;
+	
+	static {
+		/**
+		 * @j2sNative C$.useInchiAPI = true;
+		 */
+	}
+
+
+	
     private static final InchiOptions DEFAULT_OPTIONS = new InchiOptions.InchiOptionsBuilder()
                                                                         .withFlag(InchiFlag.AuxNone)
                                                                         .withTimeoutMilliSeconds(5000)
@@ -121,15 +132,16 @@ public class InChIGenerator {
     protected InChIGenerator(IAtomContainer atomContainer,
                              InchiOptions options,
                              boolean ignoreAromaticBonds) throws CDKException {
-        this.input = new InchiInput();
+        this.atomContainer = atomContainer;
+        this.input = getInchiInputFromCDKAtomContainer(atomContainer, ignoreAromaticBonds);
         this.options = options;
         if (options == null)
             this.options = DEFAULT_OPTIONS;
-        generateInchiFromCDKAtomContainer(atomContainer, ignoreAromaticBonds);
+        output = toInchi();
         auxNone = this.options.getFlags().contains(InchiFlag.AuxNone);
     }
 
-    /**
+	/**
      * <p>Constructor. Generates InChI from CDK AtomContainer.
      *
      * <p>Reads atoms, bonds etc from atom container and converts to format
@@ -189,18 +201,34 @@ public class InChIGenerator {
         this(atomContainer, convertJniToJnaOpts(opts), ignoreAromaticBonds);
     }
 
+	/**
+	 * A public method to convert a CDKAtomContainer to an InchiInput only, thus
+	 * allowing a "universal molecular adapter" for communication with other
+	 * toolkits. Unlike SMILES, this adapter can contain 2D or 3D coordinate
+	 * representations, and unlike MOL/SDF allows for describing 0D structures with
+	 * defined stereochemical parities. Unlike both, it needs no parsing and can be
+	 * used directly to generate structures in any JNA-InChI-enabled toolkit.
+	 * 
+	 * This public method hides the (unuseful?) ignoreAromaticBonds business.
+	 * 
+	 * @param atomContainer
+	 * @return
+	 * @throws CDKException
+	 */
+    public static InchiInput getInchiInputFromCDKAtomContainer(IAtomContainer atomContainer) throws CDKException {
+    	return getInchiInputFromCDKAtomContainer(atomContainer, false);
+    }
+    
     /**
-     * <p>Reads atoms, bonds etc from atom container and converts to format
-     * InChI library requires, then places call for the library to generate
-     * the InChI.
-     *
+     * <p>Reads atoms, bonds etc from atom container and returns an InchiInput object.
+     * 
      * @param atomContainer AtomContainer to generate InChI for.
      * @param ignore Ignore aromatic bonds
      * @throws CDKException
      */
-    private void generateInchiFromCDKAtomContainer(IAtomContainer atomContainer, boolean ignore) throws CDKException {
-        this.atomContainer = atomContainer;
 
+    private static InchiInput getInchiInputFromCDKAtomContainer(IAtomContainer atomContainer, boolean ignoreAromaticBonds) throws CDKException {
+        	InchiInput input = new InchiInput();
         Iterator<IAtom> atoms = atomContainer.atoms().iterator();
 
         // Check for 3d coordinates
@@ -299,7 +327,7 @@ public class InChIGenerator {
             // Get bond order
             InchiBondType order;
             Order bo = bond.getOrder();
-            if (!ignore && bond.isAromatic()) {
+            if (!ignoreAromaticBonds && bond.isAromatic()) {
                 order = InchiBondType.ALTERN;
             } else if (bo == Order.SINGLE) {
                 order = InchiBondType.SINGLE;
@@ -484,8 +512,7 @@ public class InChIGenerator {
                         atomMap.get(peripherals[3]), parity));
             }
         }
-
-        output = InchiAPI.toInchi(input, options);
+        return input;
     }
 
     private static List<IBond> onlySingleBonded(List<IBond> bonds) {
@@ -534,14 +561,14 @@ public class InChIGenerator {
      * Gets generated InChIKey string.
      */
     public String getInchiKey() throws CDKException {
-        InchiKeyOutput inchiKeyOutput = InchiAPI.inchiToInchiKey(getInchi());
+        InchiKeyOutput inchiKeyOutput = inchiToInchiKey(getInchi());
         if (inchiKeyOutput.getStatus() == InchiKeyStatus.OK)
             return inchiKeyOutput.getInchiKey();
         else
             throw new CDKException("Error while creating InChIKey: " + inchiKeyOutput.getStatus());
     }
 
-    /**
+	/**
      * Gets auxiliary information.
      */
     public String getAuxInfo() {
@@ -563,4 +590,21 @@ public class InChIGenerator {
     public String getLog() {
         return output.getLog();
     }
+    
+	private InchiOutput toInchi() {
+		if (useInchiAPI) {
+			return InchiAPI.toInchi(input, options);
+		} else {
+			return JnaInchi.toInchi(input, options);
+		}
+	}
+
+    private InchiKeyOutput inchiToInchiKey(String inchi) {
+		if (useInchiAPI) {
+			return InchiAPI.inchiToInchiKey(inchi);
+		} else {
+			return JnaInchi.inchiToInchiKey(inchi);
+		}
+	}
+
 }
