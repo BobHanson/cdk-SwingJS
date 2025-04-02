@@ -65,9 +65,16 @@ public class CDKSwingJSTest {
 	}
 
 	private static void test0() {
-		// N variant
+
+		
+		
+		
 		long t0 = System.currentTimeMillis();
 
+		
+		
+		
+		
 		String auxinfo = "AuxInfo=1/0/N:1,3,5,2,6,4/E:(1,2,3,4,5,6)/rA:6nCCCCCC/rB:;d1s2;d2;s1;s4d5;/rC:7.8848,-4.7251,0;9.6152,-4.7246,0;8.7516,-4.225,0;9.6152,-5.7255,0;7.8848,-5.73,0;8.7538,-6.225,0;";
 
 		String molFile = "https://cactus.nci.nih.gov/chemical/structure/C/file?format=sdf&get3d=true\n" + 
@@ -94,6 +101,8 @@ public class CDKSwingJSTest {
 		String smiles = "O=C1-NC=C1";
 		
 		
+		String taxol = "InChI=1S/C47H51NO14/c1-25-31(60-43(56)36(52)35(28-16-10-7-11-17-28)48-41(54)29-18-12-8-13-19-29)23-47(57)40(61-42(55)30-20-14-9-15-21-30)38-45(6,32(51)22-33-46(38,24-58-33)62-27(3)50)39(53)37(59-26(2)49)34(25)44(47,4)5/h7-21,31-33,35-38,40,51-52,57H,22-24H2,1-6H3,(H,48,54)/t31-,32-,33+,35-,36+,37+,38-,40-,45+,46-,47+/m0/s1";
+		
 		// ene inchi = "InChI=1S/C4H8/c1-3-4-2/h3-4H,1-2H3/b4-3+";
 		// morphine 
 		//inchi = "InChI=1S/C17H19NO3/c1-18-7-6-17-10-3-5-13(20)16(17)21-15-12(19)4-2-9(14(15)17)8-11(10)18/h2-5,10-11,13,16,19-20H,6-8H2,1H3/t10-,11+,13-,16-,17-/m0/s1";
@@ -101,19 +110,33 @@ public class CDKSwingJSTest {
 		// allene inchi = "InChI=1S/C6H10/c1-3-5-6-4-2/h3,6H,4H2,1-2H3/t5-/m0/s1";
 		// 2-propanol inchi = "InChI=1S/C4H10O/c1-3-4(2)5/h4-5H,3H2,1-2H3/t4-/m0/s1";
 		try {
+			
+			// phenol-carboxylate test
 
+			String inchipc = "InChI=1S/C9H8O3/c10-8-4-1-7(2-5-8)3-6-9(11)12/h1-6,10H,(H,11,12)/p-1/b6-3+";
+			
+			InchiInput inputpc = InchiAPI.getInchiInputFromInChI(inchipc, "fixacid");
+			IAtomContainer molpc = new InChIToStructure(inputpc, DefaultChemObjectBuilder.getInstance()) {
+			}.getAtomContainer();
+		    getImagesForCDKMolecule(molpc);
+			
+
+			// taxol test
+			getImagesForInChI(taxol);
+			
 			
 			// amide test
 			getImagesForInChI("InChI=1S/C3H7NO/c1-2-3(4)5/h2H2,1H3,(H2,4,5)");
 
 			getImagesForSMILES(smiles);
 
+			if(true)
+				return;
 //			String abc ="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
 //			checkABC(abc, "lt");
 //			checkABC(abc, "tr");
 //			checkABC(abc, "az");
 //
-			StructureDiagramGenerator sdg;
 			IAtomContainer mol;
 		
 			// molfile -> image, amide fix
@@ -141,7 +164,7 @@ public class CDKSwingJSTest {
 			
 			mol = new InChIToStructure(inchi, getBuilder(), "fixamide") {}.getAtomContainer();
 			mol = AtomContainerManipulator.suppressHydrogens(mol);
-			sdg = new StructureDiagramGenerator();
+			StructureDiagramGenerator sdg = new StructureDiagramGenerator();
 			sdg.generateCoordinates(mol);
 			String inchi2 = InChIGeneratorFactory.getInstance().getInChIGenerator(mol).getInchi();
 			System.out.println(inchi);
