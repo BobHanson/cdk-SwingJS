@@ -56,7 +56,7 @@ public class CDK {
 	
 	public static int notApplicable;
 
-	public static boolean useInchiAPI = false;
+	public static boolean useInchiAPI = true;
 
 	private final static String DEFAULT_OUTPUT_OPTIONS = "fixamide fixacid";
 
@@ -315,7 +315,9 @@ public class CDK {
 
 	private static InchiInput getInchiInputFromMoleculeHandleImpl(Pointer hStatus, Pointer hMolecule,
 			String outputOptions) {
-		if (useInchiAPI) {		
+		if (useInchiAPI) {
+			if (outputOptions == null)
+				outputOptions = DEFAULT_OUTPUT_OPTIONS;
 			return InchiAPI.getInchiInputFromMoleculeHandle(hStatus, hMolecule, outputOptions);
 		} else {
 			notApplicable++;
