@@ -1,0 +1,44 @@
+<project name="cdk-SwingJS" default="main" basedir=".">
+
+ 
+    <property name="dist.dir" value="dist" />
+
+  <!-- compile options -->
+  <property name="debug" value="on" />
+  <property name="deprecation" value="off" />
+  <property name="optimization" value="off" />
+  <property name="lib.dir" value="jars" />
+  <property name="manifest.dir" value="manifest" />
+  <property name="appjars.dir" value="build/appjars" />
+  <property name="classes.dir" value="build/classes" />
+  <property name="jnainchi" value="jna-inchi-1.4-SNAPSHOT.jar" />
+	
+  <target name="main" id="main" depends="jar"/>
+  
+  <target name="libjars" id="libjars">
+    <mkdir dir="${classes.dir}"/>
+    <unjar dest="${classes.dir}" src="${lib.dir}/${jnainchi}"/>
+  </target>
+
+    <target id="classes" name="classes">
+      <mkdir dir="${classes.dir}"/>
+      <copy todir="${classes.dir}" overwrite="true">
+        <fileset dir="bin">
+          <include name="**/*" />
+        </fileset>
+      </copy>
+    </target>
+    
+  <target name="jar" id="jar"
+          depends="libjars,classes">
+     <jar destfile="build/CDK-SwingJS.jar">
+      <!--   manifest="${manifest.dir}/application.txt" -->
+        <fileset dir="${classes.dir}" includes="**/*"/>
+    </jar>
+  	<echo>build/CDK-SwingJS.jar created (unsigned)</echo>
+  	<copy file="build/CDK-SwingJS.jar" tofile="dist/CDK-SwingJS.jar" />  	
+  	
+  </target>
+
+  	
+</project>

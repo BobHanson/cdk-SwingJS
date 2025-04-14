@@ -1,4 +1,4 @@
-<project name="Build Tracker core using SwingJS branch " default="toJs" basedir=".">
+<project name="cdk-SwingJS" default="toJs" basedir=".">
  
    <property name="project" value="cdk-SwingJS" />
    <property name="site.dir" value="site" />
