@@ -1432,5 +1432,5 @@ public class InchiLibrary implements Library {
    * @param hInChIKeyBuilder
    */
   static native void IXA_INCHIKEYBUILDER_Destroy(Pointer hStatus, Pointer hInChIKeyBuilder);
-
+  
 }
