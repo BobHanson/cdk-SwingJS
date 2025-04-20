@@ -136,25 +136,29 @@ public class CDK {
 		}
 	}
 
-	public static String getDataURIFromCDKMolecule(IAtomContainer mol) {		
-		BufferedImage image = getImageFromCDKMolecule(mol);
+	public static String getDataURIFromCDKMolecule(IAtomContainer mol, boolean withAtomNumbers) {		
+		BufferedImage image = getImageFromCDKMolecule(mol, withAtomNumbers);
 		if (image == null)
 			return null;
 		return getDataURIForImage(image);
 	}
 
 	public static String getDataURIFromInChI(String inchi) {
-		return getDataURIFromInChIOpts(inchi, DEFAULT_OUTPUT_OPTIONS);
+		return getDataURIFromInChIOpts(inchi, DEFAULT_OUTPUT_OPTIONS, false);
 	}
 
-	public static String getDataURIFromInChIOpts(String inchi, String outputOptions) {
-		return getDataURIFromCDKMolecule(getCDKMoleculeFromInChI(inchi, outputOptions));
+	public static String getDataURIFromInChIOpts(String inchi, String outputOptions, boolean withAtomNumbers) {
+		return getDataURIFromCDKMolecule(getCDKMoleculeFromInChI(inchi, outputOptions), withAtomNumbers);
 	}
 
-	public static BufferedImage getImageFromCDKMolecule(IAtomContainer mol) {		
+	public static BufferedImage getImageFromCDKMolecule(IAtomContainer mol, boolean withAtomNumbers) {
 		try {
 			DepictionGenerator dg = null;
 			dg = new DepictionGenerator();
+			if (withAtomNumbers) {
+				dg = dg.withAnnotationScale(0.8);
+				dg = dg.withAtomNumbers();
+			}
 			return dg.depict(mol).toImg();
 		} catch (CDKException e) {
 			return null;
@@ -398,4 +402,5 @@ public class CDK {
 		return InchiAPI.parseOptions(options);
 		
 	}
+	
 }

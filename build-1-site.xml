@@ -6,8 +6,8 @@
   
  - creates the site/ directory if it does not exist
  - unzips swingjs/SwingJS-site.zip into site/
- - copies non-java resources from html/ into site/
- - copies non-java resources from resources/ into site/swingjs/j2s
+ - copies html-related resources from html/ into site/
+ - copies Java-related resources from resources/ into site/swingjs/j2s
  
 -->
 

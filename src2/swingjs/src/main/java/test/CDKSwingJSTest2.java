@@ -18,9 +18,6 @@ import swingjs.CDK;
 
 public class CDKSwingJSTest2 {
 
-	public static int nFrame;
-	private final static boolean showFrames = false;
-
 	private static boolean isJS = /** @j2sNative true || */
 			false;
 
@@ -41,7 +38,7 @@ public class CDKSwingJSTest2 {
 	protected static void runTests() {
 		long t = System.currentTimeMillis();
 
-		String outdir = null;// "C:/temp/";
+		String outdir = "C:/temp/";
 
 		test0(outdir);
 
@@ -145,7 +142,7 @@ public class CDKSwingJSTest2 {
 		inchi = "InChI=1S/C3H3NO/c5-3-1-2-4-3/h1-2H,(H,4,5)";
 		// molecule from inchi
 		mol = CDK.getCDKMoleculeFromInChI(inchi, "fixamide");
-		testShowMol(mol, "from inchi");
+		testShowMol(mol, "fromInchi", outdir);
 
 		// optional fixed-H inchi from standard inchi
 		// not in CDK
@@ -159,7 +156,7 @@ public class CDKSwingJSTest2 {
 
 		// molecule from inchi
 		mol = CDK.getCDKMoleculeFromInChI(inchi, "fixamide");
-		testShowMol(mol, "from inchi");
+		testShowMol(mol, "fromInchi2", outdir);
 
 		// not in JnaInchI 
 		/*
@@ -395,8 +392,8 @@ public class CDKSwingJSTest2 {
 		return;
 	}
 
-	private static void testShowMol(IAtomContainer mol, String title) {
-		// testShowViewAndWriteMol(mol, title, null, null);
+	private static void testShowMol(IAtomContainer mol, String title, String outdir) {
+		writeImage(CDK.getImageFromCDKMolecule(mol, true), "testCDK_" + title, outdir);
 	}
 
 	private static void testInChIParsers(String outdir) {
@@ -461,6 +458,8 @@ public class CDKSwingJSTest2 {
 		if (!dir.endsWith("/"))
 			dir += "/";
 		fname = dir + fname;
+		if (!fname.endsWith(".png"))
+			fname += ".png";
 		try {
 			FileOutputStream fos = new FileOutputStream(fname);
 			ImageIO.write(bi, "png", fos);
