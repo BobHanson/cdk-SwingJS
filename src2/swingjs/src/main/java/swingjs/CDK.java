@@ -11,7 +11,6 @@ import javax.imageio.ImageIO;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.depict.DepictionGenerator;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.exception.InvalidSmilesException;
 import org.openscience.cdk.inchi.InChIGenerator;
 import org.openscience.cdk.inchi.InChIGeneratorFactory;
 import org.openscience.cdk.inchi.InChIToStructure;
@@ -56,7 +55,10 @@ public class CDK {
 	
 	public static int notApplicable;
 
+	public static boolean throwExceptionIfNotApplicable = true;
+	
 	public static boolean useInchiAPI = true;
+	
 
 	private final static String DEFAULT_OUTPUT_OPTIONS = "fixamide fixacid";
 
@@ -64,6 +66,10 @@ public class CDK {
 		/**
 		 * @j2sNative C$.useInchiAPI = true;
 		 */
+	}
+	
+	static {
+		Locale.setDefault(Locale.ROOT);
 	}
 
 	@SuppressWarnings("resource")
@@ -81,7 +87,7 @@ public class CDK {
 	}
 
 	public static String get2DMolFromInChI(String inchi) {
-		return get2DMolFromInChIOpt(inchi, DEFAULT_OUTPUT_OPTIONS);
+		return get2DMolFromInChIOpt(inchi, null);
 	}
 
 	public static String get2DMolFromInChIOpt(String inchi, String outputOptions) {
@@ -98,6 +104,8 @@ public class CDK {
 
 	public static IAtomContainer getCDKMoleculeFromInChI(String inchi, String outputOptions) {
 		try {
+			if (outputOptions == null)
+				outputOptions = DEFAULT_OUTPUT_OPTIONS;
 			return getCDKMoleculeFromInChIImpl(inchi, outputOptions); 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -144,7 +152,7 @@ public class CDK {
 	}
 
 	public static String getDataURIFromInChI(String inchi) {
-		return getDataURIFromInChIOpts(inchi, DEFAULT_OUTPUT_OPTIONS, false);
+		return getDataURIFromInChIOpts(inchi, null, false);
 	}
 
 	public static String getDataURIFromInChIOpts(String inchi, String outputOptions, boolean withAtomNumbers) {
@@ -199,8 +207,14 @@ public class CDK {
 
 	public static String getInChIFromSmiles(String smiles, String inputOptions) {
 		try {
-			return getInChIFromCDKMolecule(new SmilesParser(getBuilder()).parseSmiles(smiles), fixInputOptions(inputOptions));
-		} catch (InvalidSmilesException e) {
+			IAtomContainer mol = new SmilesParser(getBuilder()).parseSmiles(smiles);
+			if (!smiles.equals(smiles.toUpperCase())) {
+				// we need double bonds in the case of c n o s
+				smiles = new SmilesGenerator(SmiFlavor.Canonical).create(mol);
+				mol = new SmilesParser(getBuilder()).parseSmiles(smiles);
+			}
+			return getInChIFromCDKMolecule(mol, fixInputOptions(inputOptions));
+		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
 		}
@@ -216,6 +230,8 @@ public class CDK {
 	}
 
 	public static InchiInput getInchiInputFromInChI(String inchi, String outputOptions) {
+		if (outputOptions == null)
+			outputOptions = DEFAULT_OUTPUT_OPTIONS;
 		return getInchiInputFromInChIImpl(inchi, outputOptions);
 	}
 
@@ -228,8 +244,12 @@ public class CDK {
 		return getInchiKeyFromInChIImpl(inchi);
 	}
 
+	public static String getInchiKeyFromInchi(String inchi) {
+		return getInchiKeyFromInChIImpl(inchi);
+	}
+
 	public static String getInchiModelJSON(String inchi) {	
-		return getInchiModelJSONOpts(inchi, DEFAULT_OUTPUT_OPTIONS);
+		return getInchiModelJSONOpts(inchi, null);
 	}
 
 	public static String getInchiModelJSONOpts(String inchi, String outputOptions) {	
@@ -287,8 +307,8 @@ public class CDK {
 	}
 
 	private static String fixInputOptions(String inputOptions) {
-		if (inputOptions == null || "standard".equals(inputOptions))
-			inputOptions = "";
+		if ("standard".equals(inputOptions))
+			inputOptions = null;
 		return inputOptions;
 	}
 
@@ -300,7 +320,8 @@ public class CDK {
 		if (useInchiAPI) {
 			return InchiAPI.getInchiInputFromInChI(inchi, outputOptions);
 		} else {
-			if (outputOptions == null || outputOptions.length() == 0) {
+			if (outputOptions != null && outputOptions.length() > 0) {
+				// ignore
 				notApplicable++;
 				System.err.println("Output options are not implemented in JnaInchi");
 			}
@@ -313,19 +334,17 @@ public class CDK {
 			return InchiAPI.getInChIFromInchiInput(input, inputOptions);
 		} else {
 			notApplicable++;
-			return null; // not implemented
+			throw new RuntimeException("Inchi from InchiInput is not implemented in JnaInchi");
 		}
 	}
 
 	private static InchiInput getInchiInputFromMoleculeHandleImpl(Pointer hStatus, Pointer hMolecule,
 			String outputOptions) {
 		if (useInchiAPI) {
-			if (outputOptions == null)
-				outputOptions = DEFAULT_OUTPUT_OPTIONS;
 			return InchiAPI.getInchiInputFromMoleculeHandle(hStatus, hMolecule, outputOptions);
 		} else {
 			notApplicable++;
-			return null;
+			throw new RuntimeException("InchiInput from MoleculeHandle is not implemented in JnaInchi");
 		}
 	}
 
@@ -342,7 +361,7 @@ public class CDK {
 			return InchiAPI.getJSONFromInchiInput(input);
 		} else {
 			notApplicable++;
-			return "";
+			throw new RuntimeException("JSON from InchiInput is not implemented in JnaInchi");
 		}
 	}
 
@@ -382,7 +401,8 @@ public class CDK {
 			IAtomContainer mol = getCDKMoleculeFromInchiInput(input);
 			return AtomContainerManipulator.suppressHydrogens(mol);
 		} else {
-			if (outputOptions == null || outputOptions.length() == 0) {
+			if (outputOptions != null && outputOptions.length() != 0) {
+				// ignore
 				notApplicable++;
 				System.err.println("Output options are not implemented in JnaInchi");
 			}
@@ -399,8 +419,12 @@ public class CDK {
 	}
 
 	public static InchiOptions getInchiOptions(String options) {
+		if (useInchiAPI) {
 		return InchiAPI.parseOptions(options);
-		
+		} else {
+			notApplicable++;
+			throw new RuntimeException("Option parsing is not implemented in JnaInchi");
+		}
 	}
-	
+
 }

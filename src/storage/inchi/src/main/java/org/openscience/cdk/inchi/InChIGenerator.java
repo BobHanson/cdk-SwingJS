@@ -46,6 +46,7 @@ import org.openscience.cdk.interfaces.IDoubleBondStereochemistry;
 import org.openscience.cdk.interfaces.IStereoElement;
 import org.openscience.cdk.interfaces.ITetrahedralChirality;
 import org.openscience.cdk.interfaces.ITetrahedralChirality.Stereo;
+import org.openscience.cdk.layout.StructureDiagramGenerator;
 import org.openscience.cdk.stereo.ExtendedTetrahedral;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
@@ -234,7 +235,7 @@ public class InChIGenerator {
         // Check for 3d coordinates
         boolean all3d = true;
         boolean all2d = true;
-        while (atoms.hasNext()) {
+        while (atoms.hasNext() && (all3d || all2d)) {
             IAtom atom = atoms.next();
             if (atom.getPoint3d() == null) {
                 all3d = false;

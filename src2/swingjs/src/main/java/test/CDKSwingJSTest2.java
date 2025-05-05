@@ -24,6 +24,7 @@ public class CDKSwingJSTest2 {
 	public static void main(String[] args) {
 		Locale.setDefault(Locale.ROOT);
 		CDK.useInchiAPI = true;
+		CDK.throwExceptionIfNotApplicable = false;
 		try {
 			CDK.initInchi(() -> {
 				System.out.println(CDK.getInChIVersion(false));
